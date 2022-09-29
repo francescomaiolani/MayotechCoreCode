@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf325453b2b14e92808ec22322bffcfd, type: 3}
+  m_Name: PopupSceneAnimation
+  m_EditorClassIdentifier: 
+  enterEffects:
+  - {fileID: 11400000, guid: 559d5649d6fa74115a5fa716561a3410, type: 2}
+  - {fileID: 11400000, guid: 33b86bfa199c045cdb6e34bdc1c58b3f, type: 2}
+  exitEffects: []

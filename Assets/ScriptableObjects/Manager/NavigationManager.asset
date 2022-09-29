@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f4968f770554ca6890dee3f38a18579, type: 3}
+  m_Name: NavigationManager
+  m_EditorClassIdentifier: 
+  navigationRequestLimit: 2
+  preloadScenes: []
+  allScenes: []
+  onSceneLoadedGameEvent: {fileID: 11400000, guid: d6b6a4d531cc74f1b9e4eba65d69e125, type: 2}
+  onNavigationStarted: {fileID: 11400000, guid: 762e1cf5d5c4640b78e931fa113bdf38, type: 2}
+  onNavigationEnded: {fileID: 11400000, guid: 2faa06741bb1e4baf8f2cb618c52fdd7, type: 2}
