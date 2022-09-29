@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeca10b413d794a41ac66d3fca7ac885, type: 3}
+  m_Name: SaveManager
+  m_EditorClassIdentifier: 
+  onSaveCompleted: {fileID: 11400000, guid: 5571e9dc2f3434cb6aecce71a5635276, type: 2}
+  onSaveFailed: {fileID: 11400000, guid: ccb76895f43fb4074b80ac6fbaeefe75, type: 2}
+  onLoadCompleted: {fileID: 11400000, guid: 75d4fd797b9fe476d9167c1f6fb75e17, type: 2}
+  onLoadFailed: {fileID: 11400000, guid: 1d28a55b79a76435793597c9c6ee6364, type: 2}

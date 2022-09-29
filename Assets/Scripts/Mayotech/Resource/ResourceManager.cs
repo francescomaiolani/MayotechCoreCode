@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mayotech.SaveLoad;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Mayotech.Resources
@@ -46,6 +47,13 @@ namespace Mayotech.Resources
         {
             return resourcesDictionary.ToDictionary(keyValue => keyValue.Key.Type,
                 keyValue => (object)keyValue.Value.Amount);
+        }
+
+        [Button("Save Resources", ButtonSizes.Medium), GUIColor("green")]
+        public void SaveResources()
+        {
+            var saveManager = ServiceLocator.Instance.SaveManager;
+            saveManager.SaveData("resources", this);
         }
     }
 }

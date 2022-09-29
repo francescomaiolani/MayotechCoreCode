@@ -78,11 +78,5 @@ namespace Mayotech.SaveLoad
             }
             return savedData;
         }
-
-        public void SaveResources()
-        {
-            var resourceManager = ServiceLocator.Instance.ResourceManager;
-            SaveData("resources", resourceManager);
-        }
     }
 }

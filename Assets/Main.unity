@@ -289,6 +289,7 @@ MonoBehaviour:
   resourceManager: {fileID: 11400000, guid: de7be0dcfa51946638f2a21d7539a6a0, type: 2}
   playerManager: {fileID: 11400000, guid: 7bc048cf83c2e4db985e7823c4039db4, type: 2}
   authenticationManager: {fileID: 11400000, guid: dc2f77b594a124146ac78cc831a8e5e9, type: 2}
+  saveManager: {fileID: 11400000, guid: edb4bb244a7ca49b49bb748cc112b3c8, type: 2}
 --- !u!4 &931459299
 Transform:
   m_ObjectHideFlags: 0
