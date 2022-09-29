@@ -6,16 +6,10 @@ public class ServicesManager : SingletonPersistent<ServicesManager>
 {
     [SerializeField] private List<Service> services;
 
-    private void Start()
-    {
-        InitServices();
-    }
+    private void Start() => InitServices();
 
-    public void InitServices()
+    private void InitServices()
     {
-        foreach (var service in services)
-        {
-            service.InitService();
-        }
+        foreach (var service in services) service.InitService();
     }
 }

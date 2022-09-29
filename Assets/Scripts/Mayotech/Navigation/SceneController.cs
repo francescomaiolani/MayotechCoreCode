@@ -28,7 +28,7 @@ namespace Mayotech.Navigation
         
         public async UniTask NavigateHere() => StartSceneAnimations(sceneAnimationConfig.EnterEffects);
         
-        private UniTask StartSceneAnimations(List<AnimationEffect> effects)
+        protected UniTask StartSceneAnimations(List<AnimationEffect> effects)
         {
             foreach (var effect in effects)
             {
@@ -48,10 +48,10 @@ namespace Mayotech.Navigation
             return UniTask.Delay(GetAnimationDuration(effects));
         }
         
-        protected int GetAnimationDuration(IEnumerable<AnimationEffect> effects)
+        protected int GetAnimationDuration(List<AnimationEffect> effects)
         {
             var maxDuration = Mathf.Max(effects.Select(item => item.Duration).ToArray());
-            return (int)(maxDuration * 1000f);
+            return effects.Count == 0 ? 0 : (int)(maxDuration * 1000f);
         }
         
         protected void Move(AnimationEffect animationEffect)

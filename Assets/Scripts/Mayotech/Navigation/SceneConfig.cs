@@ -13,33 +13,42 @@ namespace Mayotech.Navigation
         [SerializeField] private SceneType sceneType;
         [SerializeField] private bool keepLoaded;
         [SerializeField] private bool saveInSceneHistory;
-
+        
         public string SceneName => sceneName;
         public SceneType SceneType => sceneType;
         public bool KeepLoaded => keepLoaded;
         public bool SaveInSceneHistory => saveInSceneHistory;
 
-        private void OnValidate()
+        [OnInspectorInit]
+        private void ValidateInspector()
         {
-            if (keepLoaded && !saveInSceneHistory)
-            {
+            if (keepLoaded && !saveInSceneHistory) 
                 keepLoaded = false;
-            }
-        }
-
-        private NavigationManager GetNavigationManager()
-        {
-            var guid = AssetDatabase.FindAssets("t: NavigationManager")[0];
-            if (guid == null) return null;
-            var path = AssetDatabase.GUIDToAssetPath(guid);
-            return AssetDatabase.LoadAssetAtPath<NavigationManager>(path);
+            if (navigationManager == null) 
+                GetNavigationManager();
+            
+            inScenes =  navigationManager.allScenes.Contains(this);
+            inPreloadScenes = navigationManager.preloadScenes.Contains(this);
         }
         
+        private void GetNavigationManager()
+        {
+            var guid = AssetDatabase.FindAssets("t: NavigationManager")[0];
+            if (guid == null) return;
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            navigationManager = AssetDatabase.LoadAssetAtPath<NavigationManager>(path);
+        }
+        
+        private NavigationManager navigationManager;
+        private bool inScenes, inPreloadScenes;
+        
+        [InfoBox("Already added to scenes", "inScenes", InfoMessageType = InfoMessageType.Warning)]
         [Button("Add Scene", ButtonSizes.Large),  GUIColor(0.4f, 0.8f, 1)]
-        public void AddSceneToNavigationManager() => GetNavigationManager()?.AddScene(this);
+        public void AddSceneToNavigationManager() => navigationManager?.AddScene(this);
 
-        [Button("Add Preload Scene", ButtonSizes.Medium)]
-        public void AddPreloadSceneToNavigationManager() => GetNavigationManager()?.AddPreloadScene(this);
+        [InfoBox("Already added to preload scenes", "inPreloadScenes", InfoMessageType = InfoMessageType.Warning)]
+        [Button("Add Preload Scene", ButtonSizes.Large)]
+        public void AddPreloadSceneToNavigationManager() => navigationManager?.AddPreloadScene(this);
     }
 
     public enum SceneType

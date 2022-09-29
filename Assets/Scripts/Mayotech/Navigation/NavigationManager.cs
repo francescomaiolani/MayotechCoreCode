@@ -12,8 +12,8 @@ namespace Mayotech.Navigation
     public class NavigationManager : Service
     {
         [SerializeField] private int navigationRequestLimit = 2;
-        [SerializeField] private List<SceneConfig> preloadScenes;
-        [SerializeField] private List<SceneConfig> allScenes;
+        [SerializeField] public List<SceneConfig> preloadScenes;
+        [SerializeField] public List<SceneConfig> allScenes;
         [SerializeField, AutoConnect] private OnSceneLoadedGameEvent onSceneLoadedGameEvent;
         [SerializeField, AutoConnect] private OnNavigationStartedGameEvent onNavigationStarted;
         [SerializeField, AutoConnect] private OnNavigationEndedGameEvent onNavigationEnded;

@@ -39,5 +39,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  from: {x: 0, y: 0, z: 0}
+  from: {x: -100, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}

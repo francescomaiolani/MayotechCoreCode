@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigationRequestLimit: 2
   preloadScenes: []
-  allScenes: []
+  allScenes:
+  - {fileID: 11400000, guid: 6a8aa0bed4e834fcc986178f2b338b20, type: 2}
+  - {fileID: 11400000, guid: 5cf1b2f9aa1de43589e0650f1761cee3, type: 2}
   onSceneLoadedGameEvent: {fileID: 11400000, guid: d6b6a4d531cc74f1b9e4eba65d69e125, type: 2}
   onNavigationStarted: {fileID: 11400000, guid: 762e1cf5d5c4640b78e931fa113bdf38, type: 2}
   onNavigationEnded: {fileID: 11400000, guid: 2faa06741bb1e4baf8f2cb618c52fdd7, type: 2}

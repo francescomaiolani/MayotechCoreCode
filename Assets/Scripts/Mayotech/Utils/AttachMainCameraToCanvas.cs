@@ -11,6 +11,10 @@ namespace WhatWapp.SceneDirector
         private Canvas canvas;
         private Canvas Canvas => canvas ??= GetComponent<Canvas>();
         
-        protected virtual void OnEnable() => Canvas.worldCamera = MainCamera.Camera;
+        protected virtual void OnEnable()
+        {
+            Canvas.renderMode = RenderMode.ScreenSpaceCamera;   
+            Canvas.worldCamera = MainCamera.Camera;
+        }
     }
 }
