@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Mayotech.UGSResources;
+using Mayotech.UGSEconomy.Currency;
 using Unity.Services.Economy;
 using Unity.Services.Economy.Model;
 using UnityEngine;

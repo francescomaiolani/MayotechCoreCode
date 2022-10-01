@@ -4,9 +4,9 @@ using UnityEngine;
 [Serializable]
 public class ScriptableVariable<T> : ScriptableObject
 {
-    [SerializeField] private T value;
+    [SerializeField] protected T value;
 
-    public T Value
+    public virtual T Value
     {
         get => value;
         set => this.value = value;

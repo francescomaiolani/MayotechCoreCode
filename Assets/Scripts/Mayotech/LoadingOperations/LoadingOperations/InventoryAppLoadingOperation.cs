@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Mayotech.UGSResources;
+using Mayotech.UGSEconomy.Inventory;
 using UnityEngine;
 
 namespace Mayotech.AppLoading

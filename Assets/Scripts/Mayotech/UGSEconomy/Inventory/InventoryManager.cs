@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using Unity.Services.Economy;
 using Unity.Services.Economy.Model;
+using UnityEditor;
 using UnityEngine;
 
-namespace Mayotech.UGSResources
+namespace Mayotech.UGSEconomy.Inventory
 {
     [CreateAssetMenu(fileName = "InventoryManager", menuName = "Manager/InventoryManager")]
     public sealed class InventoryManager : Service
@@ -225,12 +227,28 @@ namespace Mayotech.UGSResources
         public void AddItemToList(ScriptableItem scriptableItem)
         {
             if (allItems.Contains(scriptableItem))
-                Debug.LogError($"Resource {scriptableItem.InventoryId}");
+                Debug.LogError($"Item: {scriptableItem.InventoryId} already added");
             else
             {
                 allItems.Add(scriptableItem);
-                Debug.Log($"Currency added {scriptableItem.InventoryId}");
+                Debug.Log($"Item added {scriptableItem.InventoryId}");
             }
+        }
+        
+        /// <summary>
+        /// Adds the currency to the list (Editor only)
+        /// </summary>
+        [Button("Add all project items", ButtonSizes.Large),GUIColor(0.3f, 0.8f, 0.8f, 1f)]
+        public void AddAllProjectCurrenciesToList()
+        {
+#if UNITY_EDITOR
+            var guids = AssetDatabase.FindAssets("t: ScriptableItem");
+            foreach (var guid in guids)
+            {
+                var item = AssetDatabase.LoadAssetAtPath<ScriptableItem>(AssetDatabase.GUIDToAssetPath(guid));
+                AddItemToList(item);
+            }
+#endif
         }
     }
 }

@@ -1,5 +1,5 @@
 using System;
-using Mayotech.UGSResources;
+using Mayotech.UGSEconomy.Currency;
 using UnityEngine;
 
 namespace Mayotech.AppLoading

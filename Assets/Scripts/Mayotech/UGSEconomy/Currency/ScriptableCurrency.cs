@@ -5,15 +5,14 @@ using Unity.Services.Economy.Model;
 using UnityEditor;
 using UnityEngine;
 
-namespace Mayotech.UGSResources
+namespace Mayotech.UGSEconomy.Currency
 {
     [Serializable]
     [CreateAssetMenu(fileName = "ScriptableCurrency", menuName = "UGSResource/ScriptableCurrency")]
     public class ScriptableCurrency : ScriptableObject, IResource
     {
         [SerializeField] private StringVariable currencyId;
-        [SerializeField, AutoConnect] private OnCurrencyServerBalanceChangedGameEvent onCurrencyServerChangedGameEvent;
-        [SerializeField, AutoConnect] private OnCurrencyLocalBalanceChangedGameEvent onCurrencyLocalChangedGameEvent;
+        [SerializeField, AutoConnect] private OnCurrencyBalanceChangedGameEvent onCurrencyChangedGameEvent;
 
         private CurrencyDefinition currencyDefinition;
         private PlayerBalance currencyBalance;
@@ -37,15 +36,20 @@ namespace Mayotech.UGSResources
                 currencyBalance = value;
                 var newAmount = currencyBalance?.Balance ?? 0;
                 if (oldAmount != newAmount)
-                    onCurrencyLocalChangedGameEvent?.RaiseEvent(this, newAmount - oldAmount);
+                    onCurrencyChangedGameEvent?.RaiseEvent(this, newAmount - oldAmount);
             }
         }
 
-        public void Init() => onCurrencyServerChangedGameEvent.Subscribe(OnCurrencyBalanceChanged);
-
-        private void OnCurrencyBalanceChanged(PlayerBalance balance) => CurrencyBalance = balance;
-
-        [Button("Add Currency to Manager", ButtonSizes.Medium)]
+        public void UpdateCurrencyAmount(long amount)
+        {
+            if (currencyBalance == null) return;
+            
+            currencyBalance.Balance += amount;
+            if (amount != 0)
+                onCurrencyChangedGameEvent?.RaiseEvent(this, amount);
+        }
+        
+        [Button("Add Currency to Manager", ButtonSizes.Large),GUIColor(0.3f, 0.8f, 0.8f, 1f)]
         public void AddCurrencyToConfig()
         {
 #if UNITY_EDITOR

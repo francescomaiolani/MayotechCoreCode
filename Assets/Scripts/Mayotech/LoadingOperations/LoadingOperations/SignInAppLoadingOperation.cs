@@ -1,4 +1,5 @@
 using System;
+using Mayotech.UGSAuthentication;
 using UnityEngine;
 
 namespace Mayotech.AppLoading

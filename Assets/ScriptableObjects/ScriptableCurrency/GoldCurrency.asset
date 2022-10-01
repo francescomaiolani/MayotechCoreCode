@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: GoldCurrency
   m_EditorClassIdentifier: 
   currencyId: {fileID: 11400000, guid: 22c082cebe89b478b930e8c6c6d328d3, type: 2}
-  onCurrencyServerChangedGameEvent: {fileID: 11400000, guid: bd8a1b85e1cf44ec6bc51920c8f11fa4, type: 2}
-  onCurrencyLocalChangedGameEvent: {fileID: 11400000, guid: a09288fe960e04a01aaeff521c7685ef, type: 2}
+  onCurrencyChangedGameEvent: {fileID: 11400000, guid: a09288fe960e04a01aaeff521c7685ef, type: 2}

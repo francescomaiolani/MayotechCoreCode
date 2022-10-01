@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   inventoryId: {fileID: 11400000, guid: 2167e289e67a24d0381b80c71c3d51c2, type: 2}
-  onItemChanged: {fileID: 0}
+  onItemChanged: {fileID: 11400000, guid: 9f79591aec036470bb582519df7d5066, type: 2}

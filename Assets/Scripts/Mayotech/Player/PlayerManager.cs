@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Services.Authentication;
 using UnityEngine;
 
 namespace Mayotech.Player
@@ -9,12 +10,22 @@ namespace Mayotech.Player
     [CreateAssetMenu(menuName = "Manager/PlayerManager")]
     public class PlayerManager : Service
     {
+        [SerializeField] private GameEvent onPlayerSignedIn;
         [SerializeReference] private List<PlayerData> playerData;
+        
         private Dictionary<StringVariable, PlayerData> playerDataDictionary = new();
 
         public override void InitService()
         {
             playerData.ForEach(item => playerDataDictionary.Add(item.MappedVariable, item));
+            onPlayerSignedIn.Subscribe(OnPlayerSignedIn);
+        }
+
+        protected void OnPlayerSignedIn()
+        {
+            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
+            Debug.Log($"PlayerInfo Token: {AuthenticationService.Instance.PlayerInfo}");
         }
 
         public T GetPlayerData<T>(StringVariable name)

@@ -30,10 +30,8 @@ namespace Mayotech.Navigation
         
         public override void InitService()
         {
-            foreach (var sceneConfig in allScenes)
-            {
+            foreach (var sceneConfig in allScenes) 
                 allScenesDictionary.TryAdd(sceneConfig.SceneName, sceneConfig);
-            }
         }
 
         public UniTask PreloadScenes()

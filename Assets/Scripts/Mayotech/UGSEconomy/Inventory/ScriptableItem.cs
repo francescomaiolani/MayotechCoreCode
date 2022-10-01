@@ -7,7 +7,7 @@ using Unity.Services.Economy.Model;
 using UnityEditor;
 using UnityEngine;
 
-namespace Mayotech.UGSResources
+namespace Mayotech.UGSEconomy.Inventory
 {
     [Serializable]
     [CreateAssetMenu(fileName = "ScriptableItem", menuName = "UGSResource/ScriptableItem")]
@@ -52,7 +52,7 @@ namespace Mayotech.UGSResources
             onItemChanged?.RaiseEvent(new []{itemInstance});
         }
 
-        [Button("Add Item to Manager", ButtonSizes.Medium)]
+        [Button("Add Item to Manager", ButtonSizes.Large), GUIColor(0.3f, 0.8f, 0.8f, 1f)]
         public void AddItemToConfig()
         {
 #if UNITY_EDITOR

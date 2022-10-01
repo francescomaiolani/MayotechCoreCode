@@ -9,7 +9,9 @@ using Mayotech.Player;
 using Mayotech.Resources;
 using Mayotech.SaveLoad;
 using Mayotech.Store;
-using Mayotech.UGSResources;
+using Mayotech.UGSAuthentication;
+using Mayotech.UGSEconomy.Currency;
+using Mayotech.UGSEconomy.Inventory;
 using UnityEngine;
 
 [Serializable]
