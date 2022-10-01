@@ -6,10 +6,10 @@ namespace Mayotech.Resources
     [Serializable]
     public class ResourceRequired
     {
-        [SerializeField] private Resource resource;
+        [SerializeField] private LocalResource localResource;
         [SerializeField] private int requiredAmount;
 
-        public Resource Resource => resource;
+        public LocalResource LocalResource => localResource;
         public int RequiredAmount => requiredAmount;
     }
 }

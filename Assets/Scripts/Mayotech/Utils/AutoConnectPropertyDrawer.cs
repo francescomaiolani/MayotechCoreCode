@@ -25,8 +25,16 @@ public class AutoConnectPropertyDrawer : PropertyDrawer
 				? $"t:{type.Name}"
 				: $"t:{type.Name} {myAttribute.AssetName}";
 			
-			Debug.Log("Searh key"  + searchKey);
+			Debug.Log("Search key"  + searchKey);
 
+			if (property.objectReferenceValue != null)
+			{
+				GUI.enabled = false;
+				EditorGUI.PropertyField(position, property, label);
+				GUI.enabled = true;
+				return;
+			}
+			
 			var guids = AssetDatabase.FindAssets(searchKey);
 
 			if (guids.Length == 0)
@@ -42,10 +50,7 @@ public class AutoConnectPropertyDrawer : PropertyDrawer
 			}
 			
 			property.serializedObject.Update();
-			
-			property.objectReferenceValue =
-				AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), type);
-			
+			property.objectReferenceValue = AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[0]), type);
 			property.serializedObject.ApplyModifiedProperties();
 		}
 

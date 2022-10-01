@@ -22,9 +22,9 @@ namespace Mayotech.Missions
             base.Init(onRequirementSatisfied);
         }
 
-        private void OnEventListened(Resource resource, int delta)
+        private void OnEventListened(LocalResource localResource, int delta)
         {
-            if (resource.ResourceType != resourceType) return;
+            if (localResource.ResourceType != resourceType) return;
             if (delta <= 0) return;
             resourceCollected += delta;
             CheckRequirement();

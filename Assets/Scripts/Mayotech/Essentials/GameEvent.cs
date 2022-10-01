@@ -18,9 +18,9 @@ public class GameEvent : ScriptableObject
     }
 }
 
-public class GameEvent<T> : ScriptableObject
+public abstract class GameEvent<T> : ScriptableObject
 {
-    protected List<Action<T>> subscribedActions = new List<Action<T>>();
+    protected List<Action<T>> subscribedActions = new();
 
     public void Subscribe(Action<T> callback) => subscribedActions.Add(callback);
     
@@ -34,7 +34,7 @@ public class GameEvent<T> : ScriptableObject
     
 }
 
-public class GameEvent<T1, T2> : ScriptableObject
+public abstract class GameEvent<T1, T2> : ScriptableObject
 {
     protected List<Action<T1, T2>> subscribedActions = new List<Action<T1, T2>>();
 

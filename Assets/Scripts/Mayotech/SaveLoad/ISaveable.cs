@@ -6,4 +6,10 @@ namespace Mayotech.SaveLoad
     {
         Dictionary<string, object> CollectSaveData();
     }
+
+    public interface ILoadable
+    {
+        Dictionary<string, object> LoadedObject { get; set; }
+        HashSet<string> CollectLoadData();
+    }
 }

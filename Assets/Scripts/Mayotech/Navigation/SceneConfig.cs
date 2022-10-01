@@ -1,5 +1,4 @@
 using System;
-using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,16 +18,12 @@ namespace Mayotech.Navigation
         public bool KeepLoaded => keepLoaded;
         public bool SaveInSceneHistory => saveInSceneHistory;
 
-        [OnInspectorInit]
-        private void ValidateInspector()
+        private void OnValidate()
         {
             if (keepLoaded && !saveInSceneHistory) 
                 keepLoaded = false;
             if (navigationManager == null) 
                 GetNavigationManager();
-            
-            inScenes =  navigationManager.allScenes.Contains(this);
-            inPreloadScenes = navigationManager.preloadScenes.Contains(this);
         }
         
         private void GetNavigationManager()
@@ -40,14 +35,10 @@ namespace Mayotech.Navigation
         }
         
         private NavigationManager navigationManager;
-        private bool inScenes, inPreloadScenes;
         
-        [InfoBox("Already added to scenes", "inScenes", InfoMessageType = InfoMessageType.Warning)]
-        [Button("Add Scene", ButtonSizes.Large),  GUIColor(0.4f, 0.8f, 1)]
+        [ContextMenu("Add Scene")]
         public void AddSceneToNavigationManager() => navigationManager?.AddScene(this);
-
-        [InfoBox("Already added to preload scenes", "inPreloadScenes", InfoMessageType = InfoMessageType.Warning)]
-        [Button("Add Preload Scene", ButtonSizes.Large)]
+        [ContextMenu("Add Preload Scene")]
         public void AddPreloadSceneToNavigationManager() => navigationManager?.AddPreloadScene(this);
     }
 

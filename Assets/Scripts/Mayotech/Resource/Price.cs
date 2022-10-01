@@ -12,8 +12,8 @@ namespace Mayotech.Resources
 
         public List<ResourceRequired> ResourcesRequired => resourcesRequired;
 
-        public bool CanAfford() => resourcesRequired.All(item => item.Resource.CheckAmount(item.RequiredAmount));
+        public bool CanAfford() => resourcesRequired.All(item => item.LocalResource.CheckAmount(item.RequiredAmount));
 
-        public void PayPrice() => resourcesRequired.ForEach(item => item.Resource.Subtract(item.RequiredAmount));
+        public void PayPrice() => resourcesRequired.ForEach(item => item.LocalResource.Subtract(item.RequiredAmount));
     }
 }

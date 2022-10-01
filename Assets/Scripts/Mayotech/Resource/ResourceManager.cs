@@ -1,22 +1,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mayotech.SaveLoad;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Mayotech.Resources
 {
     [CreateAssetMenu(menuName = "Manager/ResourceManager")]
-    public class ResourceManager : Service, ISaveable
+    public class ResourceManager : Service, ISaveable, ILoadable
     {
-        [SerializeField] private List<Resource> resources;
-        private Dictionary<ResourceType, Resource> resourcesDictionary = new();
+        [SerializeField] private List<LocalResource> resources;
+        private Dictionary<ResourceType, LocalResource> resourcesDictionary = new();
 
-        public Resource GetResource(ResourceType resourceType) =>
+        public LocalResource GetResource(ResourceType resourceType) =>
             resourcesDictionary.TryGetValue(resourceType, out var value) ? value : null;
 
         public override void InitService()
         {
+            Debug.Log("Init resource");
             resources.ForEach(item => resourcesDictionary.Add(item.ResourceType, item));
         }
 
@@ -42,18 +42,32 @@ namespace Mayotech.Resources
             price.PayPrice();
             return true;
         }
-
+        
+        public Dictionary<string, object> LoadedObject { get; set; }
+        
         public Dictionary<string, object> CollectSaveData()
         {
             return resourcesDictionary.ToDictionary(keyValue => keyValue.Key.Type,
                 keyValue => (object)keyValue.Value.Amount);
         }
+        
+        public HashSet<string> CollectLoadData()
+        {
+            return new HashSet<string>(resourcesDictionary.Keys.Select(item => item.Type));
+        }
 
-        [Button("Save Resources", ButtonSizes.Medium), GUIColor("green")]
+        [ContextMenu("Save Resources")]
         public void SaveResources()
         {
             var saveManager = ServiceLocator.Instance.SaveManager;
             saveManager.SaveData("resources", this);
+        }
+
+        [ContextMenu("Load Resources")]
+        public void LoadResource()
+        { 
+            var saveManager = ServiceLocator.Instance.SaveManager;
+            saveManager.LoadData("resources",this, LoadedObject);
         }
     }
 }
