@@ -14,7 +14,7 @@ namespace Mayotech.AppLoading
             try
             {
                 Debug.Log($"Start operation SignInAppLoadingOperation");
-                await authenticationManager.SignInAnonymously();
+                await authenticationManager.SignIn();
                 Status = LoadingOperationStatus.Completed;
                 Debug.Log($"End operation SignInAppLoadingOperation");
             }
