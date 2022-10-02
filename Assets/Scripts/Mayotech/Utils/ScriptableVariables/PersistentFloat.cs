@@ -9,7 +9,7 @@ public class PersistentFloat : ScriptableVariable<float>
     {
         get
         {
-            value = PlayerPrefs.GetFloat(key, 0);
+            value = PlayerPrefs.GetFloat(key, DefaultValue);
             return value;
         }
         set

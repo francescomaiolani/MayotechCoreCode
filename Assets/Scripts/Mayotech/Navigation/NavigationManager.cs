@@ -12,20 +12,20 @@ namespace Mayotech.Navigation
     public class NavigationManager : Service
     {
         [SerializeField] private int navigationRequestLimit = 2;
-        [SerializeField] public List<SceneConfig> preloadScenes;
-        [SerializeField] public List<SceneConfig> allScenes;
+        [SerializeField] public List<SceneData> preloadScenes;
+        [SerializeField] public List<SceneData> allScenes;
         [SerializeField, AutoConnect] private OnSceneLoadedGameEvent onSceneLoadedGameEvent;
         [SerializeField, AutoConnect] private OnNavigationStartedGameEvent onNavigationStarted;
         [SerializeField, AutoConnect] private OnNavigationEndedGameEvent onNavigationEnded;
 
-        private Dictionary<string, SceneConfig> allScenesDictionary = new();
+        private Dictionary<string, SceneData> allScenesDictionary = new();
 
         private Queue<NavigationRequest> navigationRequestsQueue = new();
         private Stack<string> scenesStack = new();
 
         private Scene CurrentScene => SceneManager.GetActiveScene();
 
-        private SceneConfig GetSceneConfig(string sceneName) =>
+        private SceneData GetSceneConfig(string sceneName) =>
             allScenesDictionary.TryGetValue(sceneName, out var sceneConfig) ? sceneConfig : null;
         
         public override void InitService()
@@ -115,9 +115,9 @@ namespace Mayotech.Navigation
             onNavigationEnded?.RaiseEvent(currentSceneName, nextSceneName);
         }
 
-        private void UnloadPreviousScene(SceneConfig currentSceneConfig)
+        private void UnloadPreviousScene(SceneData currentSceneData)
         {
-            SceneManager.UnloadSceneAsync(currentSceneConfig.SceneName);
+            SceneManager.UnloadSceneAsync(currentSceneData.SceneName);
         }
 
         private async UniTask ForwardNavigationFlow(Scene currentScene, string nextSceneName)
@@ -174,7 +174,7 @@ namespace Mayotech.Navigation
             }
         }
 
-        public void AddScene(SceneConfig scene)
+        public void AddScene(SceneData scene)
         {
             if (!allScenes.Contains(scene))
             {
@@ -185,7 +185,7 @@ namespace Mayotech.Navigation
                 Debug.LogError($"Scene {scene.SceneName} already added!");
         }
         
-        public void AddPreloadScene(SceneConfig scene)
+        public void AddPreloadScene(SceneData scene)
         {
             if (!preloadScenes.Contains(scene))
             {

@@ -5,10 +5,13 @@ using UnityEngine;
 public class ScriptableVariable<T> : ScriptableObject
 {
     [SerializeField] protected T value;
+    [SerializeField] protected T defaultValue;
 
     public virtual T Value
     {
         get => value;
         set => this.value = value;
     }
+
+    public T DefaultValue => defaultValue;
 }

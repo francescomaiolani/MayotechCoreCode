@@ -16,7 +16,7 @@ namespace Mayotech.Navigation
     [Serializable]
     public abstract class SceneController : MonoBehaviour, ISceneController
     {
-        [SerializeField] protected SceneAnimationConfig sceneAnimationConfig;
+        [SerializeField] protected SceneAnimationData sceneAnimationData;
         [SerializeField] protected CanvasGroup canvasGroup;
         [SerializeField] protected Transform content;
 
@@ -24,9 +24,9 @@ namespace Mayotech.Navigation
         
         public abstract void OnSceneLoaded();
 
-        public async UniTask NavigateAway() => StartSceneAnimations(sceneAnimationConfig.ExitEffects);
+        public async UniTask NavigateAway() => StartSceneAnimations(sceneAnimationData.ExitEffects);
         
-        public async UniTask NavigateHere() => StartSceneAnimations(sceneAnimationConfig.EnterEffects);
+        public async UniTask NavigateHere() => StartSceneAnimations(sceneAnimationData.EnterEffects);
         
         protected UniTask StartSceneAnimations(List<AnimationEffect> effects)
         {

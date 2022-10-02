@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4daa0da0ca1446b78ee872fbbdc473d, type: 3}
+  m_Name: SettingsManager
+  m_EditorClassIdentifier: 
+  musicSetting: {fileID: 11400000, guid: a255da622837141ff99e77dade80ab24, type: 2}
+  soundSetting: {fileID: 11400000, guid: 57ae5e87870a04516bbcae3fc191625a, type: 2}
+  volumeSetting: {fileID: 11400000, guid: 5cd14c4eb7ce74fcbbae3594aa1e2756, type: 2}
+  onMusicChanged: {fileID: 11400000, guid: 0d50918ce53bc4b93beef913d17d0d77, type: 2}
+  onSoundChanged: {fileID: 11400000, guid: f7b846bd24c9548d7918b0cf16e83036, type: 2}
+  onVolumeChanged: {fileID: 11400000, guid: ca7b92360f1ab487ca304eaaad2eff60, type: 2}

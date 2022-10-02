@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GameEvent/ParameterlessEvent")]
+[CreateAssetMenu(menuName = "GameEvent/Basic/ParameterlessEvent")]
 public class GameEvent : ScriptableObject
 {
-    protected List<Action> subscribedActions = new List<Action>();
+    protected List<Action> subscribedActions = new();
     
     public void Subscribe(Action callback) => subscribedActions.Add(callback);
     
@@ -31,12 +31,11 @@ public abstract class GameEvent<T> : ScriptableObject
         for (var i = subscribedActions.Count - 1; i >= 0; i--) 
             subscribedActions[i]?.Invoke(data);
     }
-    
 }
 
 public abstract class GameEvent<T1, T2> : ScriptableObject
 {
-    protected List<Action<T1, T2>> subscribedActions = new List<Action<T1, T2>>();
+    protected List<Action<T1, T2>> subscribedActions = new();
 
     public void Subscribe(Action<T1, T2> callback) => subscribedActions.Add(callback);
     

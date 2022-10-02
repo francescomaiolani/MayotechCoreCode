@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4b224452cac4347b742f64ad3066f3, type: 3}
   m_Name: PlayerManager
   m_EditorClassIdentifier: 
-  playerDatas: []
-  references:
-    version: 2
-    RefIds: []
+  onPlayerSignedIn: {fileID: 11400000, guid: f33e0123a25e44588a480e2955774668, type: 2}
+  playerData: []

@@ -17,6 +17,7 @@ namespace Mayotech.Resources
         public override void InitService()
         {
             Debug.Log("Init resource");
+            resourcesDictionary.Clear();
             resources.ForEach(item => resourcesDictionary.Add(item.ResourceType, item));
         }
 

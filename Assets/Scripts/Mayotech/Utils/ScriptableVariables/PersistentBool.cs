@@ -9,7 +9,7 @@ public class PersistentBool: ScriptableVariable<bool>
     {
         get
         {
-            value = PlayerPrefs.GetInt(key, 0) != 0;
+            value = PlayerPrefs.GetInt(key, DefaultValue? 1:0 ) != 0;
             return value;
         }
         set

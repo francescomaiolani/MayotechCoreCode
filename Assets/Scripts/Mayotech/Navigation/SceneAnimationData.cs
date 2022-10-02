@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Mayotech.Navigation
 {
-    [CreateAssetMenu(menuName = "Config/SceneAnimationConfig")]
-    public class SceneAnimationConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "Navigation/SceneAnimationData")]
+    public class SceneAnimationData : ScriptableObject
     {
         [SerializeReference] private List<AnimationEffect> enterEffects, exitEffects;
 

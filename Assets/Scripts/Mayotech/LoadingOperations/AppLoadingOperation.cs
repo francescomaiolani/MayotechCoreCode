@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Mayotech.AppLoading
@@ -60,6 +61,12 @@ namespace Mayotech.AppLoading
         public virtual void StartOperation()
         {
             Status = LoadingOperationStatus.Started;
+        }
+
+        [Button("Add to initializer", ButtonSizes.Large)]
+        public void AddToInitializer()
+        {
+            FindObjectOfType<AppInitializer>()?.AddAppLoadingOperation(this);
         }
     }
 }

@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82668dd09c51f46a7afb8adb50531931, type: 3}
   m_Name: AuthenticationManager
   m_EditorClassIdentifier: 
-  anonymousSignIn: {fileID: 11400000, guid: a2066eb8c89134f11a912ea831bf86e8, type: 2}
+  previousAuthenticationMethod: {fileID: 11400000, guid: 43db786382d2841399bcaeef457366f6, type: 2}
+  guestUserAuthentication: {fileID: 11400000, guid: a2066eb8c89134f11a912ea831bf86e8, type: 2}
+  environments:
+  - {fileID: 11400000, guid: 92a93b36c248d452986e725867705f05, type: 2}
+  - {fileID: 11400000, guid: 9900bb92602db4944af22c81ee3dc669, type: 2}
+  currentEnvironment: {fileID: 11400000, guid: 92a93b36c248d452986e725867705f05, type: 2}

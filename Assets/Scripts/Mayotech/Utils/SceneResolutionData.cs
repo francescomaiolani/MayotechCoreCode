@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Config/SceneResolutionsConfig")]
-public class SceneResolutionsConfig : ScriptableObject
+[CreateAssetMenu(menuName = "Navigation/SceneResolutionData")]
+public class SceneResolutionData : ScriptableObject
 {
     [SerializeField] private ResolutionMatch defaultResolutionMatch;
     [SerializeField] private List<ResolutionMatch> resolutionList;

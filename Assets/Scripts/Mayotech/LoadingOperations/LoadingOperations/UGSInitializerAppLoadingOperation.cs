@@ -1,15 +1,21 @@
 using Mayotech.AppLoading;
+using Mayotech.UGSAuthentication;
 using Unity.Services.Core;
+using Unity.Services.Core.Environments;
 using UnityEngine;
 
 public class UGSInitializerAppLoadingOperation : AppLoadingOperation
 {
+    protected AuthenticationManager AuthenticationManager => ServiceLocator.Instance.AuthenticationManager;
+    
     public override async void StartOperation()
     {
         base.StartOperation();
-        Debug.Log($"Start operation UnityServicesInitializerAppLoadingOperation");
-        // UnityServices.InitializeAsync() will initialize all services that are subscribed to Core.
-        await UnityServices.InitializeAsync();
+        
+        var initOptions = new InitializationOptions();
+        initOptions.SetEnvironmentName(AuthenticationManager.CurrentEnvironment.EnvironmentName);
+        Debug.Log($"Start operation UGSInitializerAppLoadingOperation");
+        await UnityServices.InitializeAsync(initOptions);
         Debug.Log($"UGS State: {UnityServices.State}");
         Status = UnityServices.State switch
         {

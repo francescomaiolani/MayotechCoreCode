@@ -37,5 +37,16 @@ namespace Mayotech.AppLoading
                 Console.WriteLine(e);
             }
         }
+
+        public void AddAppLoadingOperation(AppLoadingOperation operation)
+        {
+            if (!appLoadingOperations.Contains(operation))
+            {
+                appLoadingOperations.Add(operation);
+                Debug.Log($"{operation.name} added");
+            }
+            else
+                Debug.LogError($"Operation {operation.name} already added");
+        }
     }
 }

@@ -9,7 +9,7 @@ public class PersistentString: ScriptableVariable<string>
     {
         get
         {
-            value = PlayerPrefs.GetString(key, string.Empty);
+            value = PlayerPrefs.GetString(key, DefaultValue);
             return value;
         }
         set

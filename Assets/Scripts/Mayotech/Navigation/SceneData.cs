@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Mayotech.Navigation
 {
     [Serializable]
-    [CreateAssetMenu(menuName = "Config/SceneConfig")]
-    public class SceneConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "Navigation/SceneData")]
+    public class SceneData : ScriptableObject
     {
-        [SerializeField] private string sceneName;
-        [SerializeField] private SceneType sceneType;
-        [SerializeField] private bool keepLoaded;
-        [SerializeField] private bool saveInSceneHistory;
+        [SerializeField] protected string sceneName;
+        [SerializeField] protected SceneType sceneType;
+        [SerializeField] protected bool keepLoaded;
+        [SerializeField] protected bool saveInSceneHistory;
         
         public string SceneName => sceneName;
         public SceneType SceneType => sceneType;

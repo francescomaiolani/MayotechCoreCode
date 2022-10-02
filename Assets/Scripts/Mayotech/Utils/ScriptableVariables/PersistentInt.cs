@@ -11,7 +11,7 @@ public class PersistentInt : ScriptableVariable<int>
     {
         get
         {
-            value = PlayerPrefs.GetInt(key, 0);
+            value = PlayerPrefs.GetInt(key, DefaultValue);
             return value;
         }
         set

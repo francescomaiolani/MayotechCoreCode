@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: 
+  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"22bcee76-4578-4546-86f0-16408831d618\"\n   
+    },\n    \"rs\": {\n      \"key\": \"playerData\",\n      \"value\": {\n       
+    \"playerID\": \"AAAAA\",\n        \"sessionToken\": \"BBBBB\"\n      },\n     
+    \"type\": \"json\"\n    }\n  }\n]"
+  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"22bcee76-4578-4546-86f0-16408831d618\"\n   
+    },\n    \"rs\": {\n      \"key\": \"playerData\",\n      \"value\": {\n       
+    \"playerID\": \"AAAAA\",\n        \"sessionToken\": \"BBBBB\"\n      },\n     
+    \"type\": \"json\"\n    }\n  }\n]"
+  _environments: "[\n  {\n    \"projectId\": \"5332fe6f-e4c9-44cc-8bc4-b1e1200a711e\",\n   
+    \"name\": \"production\",\n    \"id\": \"d83b68a2-7bbb-4699-b051-b6f0c1d9113f\",\n   
+    \"isDefault\": true,\n    \"createdAt\": \"2022-09-29T08:47:55Z\",\n    \"updatedAt\":
+    \"2022-09-29T08:47:55Z\"\n  }\n]"

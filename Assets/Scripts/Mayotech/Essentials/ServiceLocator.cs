@@ -1,15 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Reflection;
 using Mayotech.Missions;
 using Mayotech.Navigation;
 using Mayotech.Player;
 using Mayotech.Resources;
 using Mayotech.SaveLoad;
+using Mayotech.Settings;
 using Mayotech.Store;
 using Mayotech.UGSAuthentication;
+using Mayotech.UGSConfig;
 using Mayotech.UGSEconomy.Currency;
 using Mayotech.UGSEconomy.Inventory;
 using UnityEngine;
@@ -27,6 +26,8 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     [SerializeField, AutoConnect] protected CurrencyManager currencyManager;
     [SerializeField, AutoConnect] protected InventoryManager inventoryManager;
     [SerializeField, AutoConnect] protected StoreManager storeManager;
+    [SerializeField, AutoConnect] protected SettingsManager settingsManager;
+    [SerializeField, AutoConnect] protected ConfigManager configManager;
 
     public NavigationManager NavigationManager => navigationManager;
     public MissionManager MissionManager => missionManager;
@@ -38,6 +39,8 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     public CurrencyManager CurrencyManager => currencyManager;
     public InventoryManager InventoryManager => inventoryManager;
     public StoreManager StoreManager => storeManager;
+    public SettingsManager SettingsManager => settingsManager;
+    public ConfigManager ConfigManager => configManager;
 
     private void Start()
     {

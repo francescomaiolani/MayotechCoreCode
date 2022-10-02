@@ -716,6 +716,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
+    Android: 1
     Server: 1
     Standalone: 0
   il2cppCompilerConfiguration: {}
@@ -804,7 +805,7 @@ PlayerSettings:
   luminVersion:
     m_VersionCode: 1
     m_VersionName: 
-  apiCompatibilityLevel: 6
+  apiCompatibilityLevel: 3
   activeInputHandler: 0
   cloudProjectId: 5332fe6f-e4c9-44cc-8bc4-b1e1200a711e
   framebufferDepthMemorylessMode: 0

@@ -10,7 +10,7 @@ public class VerticalResolutionMatcherConfig : MonoBehaviour
     [SerializeField] private CanvasScaler _canvasScaler;
     private CanvasScaler CanvasScaler => _canvasScaler ? _canvasScaler : GetComponent<CanvasScaler>();
 
-    [SerializeField] private SceneResolutionsConfig sceneResolutionsConfig;
+    [SerializeField] private SceneResolutionData sceneResolutionData;
 
     //solo in editor!! non usare
     private int previousScreenWidth, previousScreenHeight;
@@ -38,7 +38,7 @@ public class VerticalResolutionMatcherConfig : MonoBehaviour
 
     private void ApplyMatching()
     {
-        var currentResolution = sceneResolutionsConfig.DefaultResolutionMatch;
+        var currentResolution = sceneResolutionData.DefaultResolutionMatch;
 
         //variabili di supporto per i calcoli
         var screenSize = Application.isEditor
@@ -49,7 +49,7 @@ public class VerticalResolutionMatcherConfig : MonoBehaviour
         var aspectRatioDistance = Mathf.Abs(currentResolution.AspectRatio - currentRatio);
         var distance = aspectRatioDistance;
 
-        foreach (var res in sceneResolutionsConfig.ResolutionList)
+        foreach (var res in sceneResolutionData.ResolutionList)
         {
             distance = Mathf.Abs(currentRatio - res.AspectRatio);
             if (!(distance < aspectRatioDistance)) continue;

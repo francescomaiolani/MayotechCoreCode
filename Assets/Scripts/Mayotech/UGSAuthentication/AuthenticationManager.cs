@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using UnityEditor;
 using UnityEngine;
 
 namespace Mayotech.UGSAuthentication
@@ -11,9 +15,13 @@ namespace Mayotech.UGSAuthentication
     public class AuthenticationManager : Service
     {
         [SerializeField] protected PersistentInt previousAuthenticationMethod;
-        [SerializeField,AutoConnect] private GuestUserAuthentication guestUserAuthentication;
+        [SerializeField,AutoConnect] protected GuestUserAuthentication guestUserAuthentication;
+        [SerializeField,AutoConnect] protected List<Environment> environments;
+        [SerializeField] protected Environment currentEnvironment;
 
-        private AuthenticationMethod authenticationMethod;
+        public Environment CurrentEnvironment => currentEnvironment ?? environments.FirstOrDefault(item =>item.IsDefault);
+
+        protected AuthenticationMethod authenticationMethod;
 
         public override void InitService()
         {
@@ -84,6 +92,18 @@ namespace Mayotech.UGSAuthentication
         private void OnPlayerSessionExpired()
         {
             Debug.Log("Player session could not be refreshed and expired.");
+        }
+
+        [Button("Prod", ButtonSizes.Large)]
+        public void SetProdEnvironment()
+        {
+            currentEnvironment = environments.FirstOrDefault(item => item.name == "production");
+        }
+        
+        [Button("Dev", ButtonSizes.Large)]
+        public void SetDevEnvironment()
+        {
+            currentEnvironment = environments.FirstOrDefault(item => item.name == "development");
         }
     }
 }
