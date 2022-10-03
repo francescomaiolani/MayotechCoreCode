@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46f2e970c1774ccca256f3820b8a0a7, type: 3}
-  m_Name: ConfigManager
+  m_Script: {fileID: 11500000, guid: 8abcbe59bdb94ed6a0880fe26d61b5af, type: 3}
+  m_Name: OnConfigLoaded
   m_EditorClassIdentifier: 
-  onConfigFetched: {fileID: 11400000, guid: f071cda122b654e0fb6dd3ddeee37dff, type: 2}
-  gameConfigs:
-  - {fileID: 11400000, guid: a0390284f65154aa196a8c13740718e2, type: 2}

@@ -1,6 +1,5 @@
 using System;
 using Mayotech.UGSConfig;
-using Mayotech.UGSEconomy.Currency;
 using UnityEngine;
 
 namespace Mayotech.AppLoading
@@ -15,6 +14,7 @@ namespace Mayotech.AppLoading
             try
             {
                 await ConfigManager.FetchAllConfigs();
+                
                 Status = LoadingOperationStatus.Completed;
             }
             catch (Exception e)

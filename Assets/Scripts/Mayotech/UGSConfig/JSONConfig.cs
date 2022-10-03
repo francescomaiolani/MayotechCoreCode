@@ -1,35 +1,23 @@
 using System;
+using System.Reflection;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace Mayotech.UGSConfig
 {
     [Serializable]
-    public abstract class JSONConfig<T> : Config<string>
+    public abstract class JSONConfig<T> : Config<T> where T : ConfigData
     {
-        [SerializeField] protected GameEvent<string> onConfigLoaded;
-        [SerializeField] protected T deserializedData;
-
-        public override string Data
+        public override T Data
         {
             get => data;
-            set
-            {
-                data = value;
-                onConfigLoaded?.RaiseEvent(data);
-                DeserializeData(data);
-            }
+            set => data = value;
         }
 
-        public T DeserializedData
+        public void SetData(string json)
         {
-            get => deserializedData;
-            set => deserializedData = value;
-        }
-
-        public void DeserializeData(string data)
-        {
-            DeserializedData = JsonConvert.DeserializeObject<T>(data);
+            Data = JsonConvert.DeserializeObject<T>(json);
         }
     }
+
+    public class ConfigData{ }
 }

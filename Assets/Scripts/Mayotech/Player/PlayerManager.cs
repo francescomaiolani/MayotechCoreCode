@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Unity.Services.Authentication;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ namespace Mayotech.Player
         {
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
             Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
-            Debug.Log($"PlayerInfo Token: {AuthenticationService.Instance.PlayerInfo}");
+            Debug.Log($"PlayerInfo: {JsonConvert.SerializeObject(AuthenticationService.Instance.PlayerInfo)}");
         }
 
         public T GetPlayerData<T>(StringVariable name)
