@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Unity.Services.CloudSave;
@@ -14,98 +13,117 @@ namespace Mayotech.SaveLoad
     {
         private ICloudSaveDataClient CloudSave => CloudSaveService.Instance.Data;
 
-        [SerializeField, AutoConnect] private OnSaveCompletedGameEvent onSaveCompleted;
-        [SerializeField, AutoConnect] private OnSaveFailedGameEvent onSaveFailed;
         [SerializeField, AutoConnect] private OnLoadCompletedGameEvent onLoadCompleted;
         [SerializeField, AutoConnect] private OnLoadFailedGameEvent onLoadFailed;
 
 #region Save
-
-        public async void SaveData(string saveKey, ISaveable saveableObject)
+        
+        /// <summary>
+        /// Saves n ISaveable objects
+        /// </summary>
+        /// <param name="saveableObject"> the saveable objects to save </param>
+        public async void SaveData( Action onSaveCompleted = null, Action<Exception> onSaveFailed = null, params ISaveable[] saveableObjects)
         {
-            Debug.Log("Save started");
-            var data = saveableObject.CollectSaveData();
-            await Save(saveKey, data);
-            Debug.Log("Save Completed");
+            var dataDictionary = saveableObjects.ToDictionary<ISaveable, string, object>(
+                saveableObject => saveableObject.Key, saveableObject => saveableObject.CollectSaveData());
+            Debug.Log($"Saving: {JsonConvert.SerializeObject(dataDictionary)}");
+            try
+            {
+                await Save(dataDictionary, onSaveCompleted, onSaveFailed);
+                Debug.Log($"Save Completed");
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Debug.LogError("Save Failed");
+            }
         }
 
-        public async void SaveData(string saveKey, params Tuple<string, object>[] keyValues)
-        {
-            var data = keyValues.ToDictionary(keyValue =>
-                keyValue.Item1, keyValue => keyValue.Item2);
-            await Save(saveKey, data);
-        }
-
-        public async void SaveData(string saveKey, params Tuple<StringVariable, object>[] keyValues)
-        {
-            var data = keyValues.ToDictionary(keyValue =>
-                keyValue.Item1.Value, keyValue => keyValue.Item2);
-            await Save(saveKey, data);
-        }
-
-        private async UniTask Save(string saveKey, Dictionary<string, object> data)
+        /// <summary>
+        /// Asynchronously saves a dictionary with every key associated to a *complex object 
+        /// </summary>
+        private async UniTask Save(Dictionary<string, object> data, Action onSaveCompleted = null,
+            Action<Exception> onSaveFailed = null)
         {
             try
             {
                 await CloudSave.ForceSaveAsync(data);
-                onSaveCompleted?.RaiseEvent(saveKey);
+                onSaveCompleted?.Invoke();
             }
             catch (CloudSaveException cloudSaveException)
             {
                 Debug.LogException(cloudSaveException);
                 Debug.LogError($"Reason: {cloudSaveException.Reason}");
-                onSaveFailed?.RaiseEvent(saveKey);
+                onSaveFailed?.Invoke(cloudSaveException);
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
-                onSaveFailed?.RaiseEvent(saveKey);
+                onSaveFailed?.Invoke(e);
             }
         }
 
 #endregion
 
 #region Load
-        
-        public async UniTask<T> LoadData<T>(string loadKey, HashSet<string> keys, T deserializedObject)
+
+        /// <summary>
+        /// Loads the data for n loadable objects 
+        /// </summary>
+        public async UniTask LoadData(params ILoadable[] loadableObjects)
         {
-            var data = await Load(loadKey, keys);
-            if (data == null) return default;
-            var stringifyDictionary = JsonConvert.SerializeObject(data);
-            deserializedObject = JsonConvert.DeserializeObject<T>(stringifyDictionary);
-            return deserializedObject;
+            var loadKeys = loadableObjects.Select(loadable => loadable.Key).ToHashSet();
+            await Load(loadKeys);
         }
 
-        public async UniTask<T> LoadData<T>(string loadKey, ILoadable loadableObject, T deserializedObject)
+        /// <summary>
+        /// Asynchronously loads a dictionary with every key associated to a *complex ILoadable object 
+        /// </summary>
+        private async UniTask Load(HashSet<string> keys)
         {
-            var loadKeys = loadableObject.CollectLoadData();
-            var data = await Load(loadKey, loadKeys);
-            if (data == null) return default;
-            var stringifyDictionary = JsonConvert.SerializeObject(data);
-            deserializedObject = JsonConvert.DeserializeObject<T>(stringifyDictionary);
-            return deserializedObject;
-        }
-
-        private async UniTask<Dictionary<string, string>> Load(string loadKey, HashSet<string> keys)
-        {
-            var savedData = new Dictionary<string, string>();
+            var loadData = new Dictionary<string, string>();
             try
             {
                 Debug.Log("Loading Started");
-                savedData = await CloudSave.LoadAsync(keys);
-                Debug.Log($"Loading Completed: {JsonConvert.SerializeObject(savedData)}");
-                onLoadCompleted?.RaiseEvent(loadKey);
+                loadData = await CloudSave.LoadAsync(keys);
+                Debug.Log($"Loading Completed: {JsonConvert.SerializeObject(loadData)}");
+                onLoadCompleted?.RaiseEvent(loadData);
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
-                onLoadFailed?.RaiseEvent(loadKey);
-                return null;
+                onLoadFailed?.RaiseEvent(e);
             }
-
-            return savedData;
         }
 
+        /// <summary>
+        /// Asynchronously loads all player Data 
+        /// </summary>
+        [ContextMenu("Load All Player Data")]
+        public async UniTask LoadAllPlayerData()
+        {
+            try
+            {
+                var allData = await CloudSave.LoadAllAsync();
+                onLoadCompleted?.RaiseEvent(allData);
+                Debug.Log($"Player keys: {JsonConvert.SerializeObject(allData)}");
+            }
+            catch (CloudSaveException cloudSaveException)
+            {
+                Debug.LogException(cloudSaveException);
+                Debug.LogError($"Reason: {cloudSaveException.Reason}");
+                onLoadFailed?.RaiseEvent(cloudSaveException);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                onLoadFailed?.RaiseEvent(e);
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously loads all player saved keys 
+        /// </summary>
         [ContextMenu("Load All Player Keys")]
         public async void LoadAllPlayerKeys()
         {
@@ -124,28 +142,12 @@ namespace Mayotech.SaveLoad
                 Debug.LogException(e);
             }
         }
-        
-        [ContextMenu("Load All Player Data")]
-        public async void LoadAllPlayerData()
-        {
-            try
-            {
-                var allData = await CloudSave.LoadAllAsync();
-                Debug.Log($"Player keys: {JsonConvert.SerializeObject(allData)}");
-            }
-            catch (CloudSaveException cloudSaveException)
-            {
-                Debug.LogException(cloudSaveException);
-                Debug.LogError($"Reason: {cloudSaveException.Reason}");
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-            }
-        }
-        
+
 #endregion
-        
+
+        /// <summary>
+        /// Deletes player data for a certain key
+        /// </summary>
         public async void DeleteData(string key)
         {
             try

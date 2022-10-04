@@ -7,7 +7,7 @@ namespace Mayotech.Resources
     [Serializable]
     public class LocalResource : ScriptableObject, IResource
     {
-        [SerializeField] protected ResourceType resourceType;
+        [SerializeField] protected string resourceType;
         [SerializeField, AutoConnect] protected OnResourceChangedEvent resourceChangedEvent;
         [SerializeField] protected int amount;
 
@@ -24,7 +24,7 @@ namespace Mayotech.Resources
             }
         }
 
-        public ResourceType ResourceType => resourceType;
+        public string ResourceType => resourceType;
 
         public bool CheckAmount(int requiredAmount) => Amount >= requiredAmount;
 

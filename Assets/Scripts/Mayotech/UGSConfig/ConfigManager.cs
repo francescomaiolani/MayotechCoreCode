@@ -70,6 +70,7 @@ namespace Mayotech.UGSConfig
             var settings = configs?[SETTINGS];
             if (settings == null) return;
             fetchedConfigs = settings;
+            Debug.Log(JsonConvert.SerializeObject(fetchedConfigs));
             onConfigFetched?.RaiseEvent(settings);
         }
 

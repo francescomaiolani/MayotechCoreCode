@@ -12,24 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"0264ead6-8fce-4324-a533-ce2221380b1f\"\n   
+  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"6e256c15-5f67-4b77-a9d0-07db9cc46039\"\n   
     },\n    \"rs\": {\n      \"key\": \"playerData\",\n      \"type\": \"json\",\n     
     \"schemaId\": null,\n      \"value\": {\n        \"playerID\": \"AAAAA99999\",\n       
     \"sessionToken\": \"BBBBB\"\n      }\n    }\n  },\n  {\n    \"metadata\": {\n     
-    \"entityId\": \"4c805659-f41e-427c-ae03-b70907a0470a\"\n    },\n    \"rs\": {\n     
+    \"entityId\": \"5a9f303e-13a9-4295-8781-056cc4780d95\"\n    },\n    \"rs\": {\n     
     \"key\": \"otherConfig\",\n      \"type\": \"json\",\n      \"schemaId\": null,\n     
-    \"value\": {\n        \"prova\": 9\n      }\n    }\n  }\n]"
-  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"0264ead6-8fce-4324-a533-ce2221380b1f\"\n   
+    \"value\": {\n        \"prova\": 9\n      }\n    }\n  },\n  {\n    \"metadata\":
+    {\n      \"entityId\": \"fdba6ef1-4c74-4b65-8055-12810a78b741\"\n    },\n   
+    \"rs\": {\n      \"key\": \"number\",\n      \"type\": \"int\",\n      \"value\":
+    5\n    }\n  }\n]"
+  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"6e256c15-5f67-4b77-a9d0-07db9cc46039\"\n   
     },\n    \"rs\": {\n      \"key\": \"playerData\",\n      \"type\": \"json\",\n     
     \"schemaId\": null,\n      \"value\": {\n        \"playerID\": \"AAAAA99999\",\n       
     \"sessionToken\": \"BBBBB\"\n      }\n    }\n  },\n  {\n    \"metadata\": {\n     
-    \"entityId\": \"4c805659-f41e-427c-ae03-b70907a0470a\"\n    },\n    \"rs\": {\n     
+    \"entityId\": \"5a9f303e-13a9-4295-8781-056cc4780d95\"\n    },\n    \"rs\": {\n     
     \"key\": \"otherConfig\",\n      \"type\": \"json\",\n      \"schemaId\": null,\n     
-    \"value\": {\n        \"prova\": 9\n      }\n    }\n  }\n]"
+    \"value\": {\n        \"prova\": 9\n      }\n    }\n  },\n  {\n    \"metadata\":
+    {\n      \"entityId\": \"fdba6ef1-4c74-4b65-8055-12810a78b741\"\n    },\n   
+    \"rs\": {\n      \"key\": \"number\",\n      \"type\": \"int\",\n      \"value\":
+    5\n    }\n  }\n]"
   _environments: "[\n  {\n    \"projectId\": \"5332fe6f-e4c9-44cc-8bc4-b1e1200a711e\",\n   
-    \"name\": \"production\",\n    \"id\": \"d83b68a2-7bbb-4699-b051-b6f0c1d9113f\",\n   
-    \"isDefault\": true,\n    \"createdAt\": \"2022-09-29T08:47:55Z\",\n    \"updatedAt\":
-    \"2022-09-29T08:47:55Z\"\n  },\n  {\n    \"projectId\": \"5332fe6f-e4c9-44cc-8bc4-b1e1200a711e\",\n   
     \"name\": \"development\",\n    \"id\": \"3079109e-b8e2-4361-8fde-fa8f7827e637\",\n   
     \"isDefault\": false,\n    \"createdAt\": \"2022-10-02T16:06:22Z\",\n    \"updatedAt\":
-    \"2022-10-02T16:06:22Z\"\n  }\n]"
+    \"2022-10-02T16:06:22Z\"\n  },\n  {\n    \"projectId\": \"5332fe6f-e4c9-44cc-8bc4-b1e1200a711e\",\n   
+    \"name\": \"production\",\n    \"id\": \"d83b68a2-7bbb-4699-b051-b6f0c1d9113f\",\n   
+    \"isDefault\": true,\n    \"createdAt\": \"2022-09-29T08:47:55Z\",\n    \"updatedAt\":
+    \"2022-09-29T08:47:55Z\"\n  }\n]"

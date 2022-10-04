@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,16 @@ public class ServicesManager : SingletonPersistent<ServicesManager>
 
     private void InitServices()
     {
-        foreach (var service in services) service.InitService();
+        foreach (var service in services)
+        {
+            try 
+            {      
+                service.InitService();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
     }
 }

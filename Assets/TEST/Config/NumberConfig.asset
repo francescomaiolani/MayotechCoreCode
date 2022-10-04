@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc27e9302834a68b6e9148f14063da4, type: 3}
-  m_Name: CoinsString
+  m_Script: {fileID: 11500000, guid: b0afa83261744afb8dd04530dc2c1663, type: 3}
+  m_Name: NumberConfig
   m_EditorClassIdentifier: 
-  value: COINS
+  onConfigFetched: {fileID: 11400000, guid: f071cda122b654e0fb6dd3ddeee37dff, type: 2}
+  configKey: number
+  data: 0

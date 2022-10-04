@@ -11,13 +11,13 @@ namespace Mayotech.UGSEconomy.Currency
     [CreateAssetMenu(fileName = "ScriptableCurrency", menuName = "UGSResource/ScriptableCurrency")]
     public class ScriptableCurrency : ScriptableObject, IResource
     {
-        [SerializeField] private StringVariable currencyId;
+        [SerializeField] private string currencyId;
         [SerializeField, AutoConnect] private OnCurrencyBalanceChangedGameEvent onCurrencyChangedGameEvent;
 
         private CurrencyDefinition currencyDefinition;
         private PlayerBalance currencyBalance;
 
-        public string CurrencyId => currencyId.Value;
+        public string CurrencyId => currencyId;
         public string ResourceId => currencyBalance.CurrencyId;
         public long Amount => currencyBalance.Balance;
 

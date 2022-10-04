@@ -22,6 +22,8 @@ namespace Mayotech.Player
             onPlayerSignedIn.Subscribe(OnPlayerSignedIn);
         }
 
+        private void OnDestroy() => onPlayerSignedIn.Unsubscribe(OnPlayerSignedIn);
+
         protected void OnPlayerSignedIn()
         {
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");

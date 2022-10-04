@@ -13,14 +13,14 @@ namespace Mayotech.UGSEconomy.Inventory
     [CreateAssetMenu(fileName = "ScriptableItem", menuName = "UGSResource/ScriptableItem")]
     public class ScriptableItem : ScriptableObject, IResource
     {
-        [SerializeField] protected StringVariable inventoryId;
+        [SerializeField] protected string inventoryId;
         [SerializeField, AutoConnect] protected OnItemChangedGameEvent onItemChanged;
 
         protected InventoryItemDefinition itemDefinition;
         protected List<PlayersInventoryItem> inventoryItems = new();
 
         public string ResourceId => itemDefinition.Id;
-        public string InventoryId => inventoryId.Value;
+        public string InventoryId => inventoryId;
 
         public InventoryItemDefinition ItemDefinition
         {

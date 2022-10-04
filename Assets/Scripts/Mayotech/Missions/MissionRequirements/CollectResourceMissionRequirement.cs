@@ -10,7 +10,7 @@ namespace Mayotech.Missions
         protected ResourceManager ResourceManager => ServiceLocator.Instance.ResourceManager;
         [SerializeField] protected OnResourceChangedEvent listenedEvent;
 
-        [SerializeField] protected ResourceType resourceType;
+        [SerializeField] protected LocalResource resource;
         [SerializeField] protected int maxResourceToCollect;
         
         protected int resourceCollected;
@@ -22,9 +22,11 @@ namespace Mayotech.Missions
             base.Init(onRequirementSatisfied);
         }
 
+        private void OnDestroy() => listenedEvent.Unsubscribe(OnEventListened);
+
         private void OnEventListened(LocalResource localResource, int delta)
         {
-            if (localResource.ResourceType != resourceType) return;
+            if (localResource != resource) return;
             if (delta <= 0) return;
             resourceCollected += delta;
             CheckRequirement();

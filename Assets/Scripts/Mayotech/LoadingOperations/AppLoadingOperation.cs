@@ -44,6 +44,8 @@ namespace Mayotech.AppLoading
             OperationTask = UniTask.WaitUntil(() => Completed);
         }
 
+        private void OnDestroy() => onLoadingOperationCompleted.Unsubscribe(OnLoadingOperationCompleted);
+
         protected void OnLoadingOperationCompleted(AppLoadingOperation loadingOperation)
         {
             if (dependenciesOperation.Contains(loadingOperation))

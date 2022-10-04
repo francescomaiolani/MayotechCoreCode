@@ -15,20 +15,22 @@ namespace Mayotech.UGSConfig
 
         public string ConfigKey => configKey;
 
-        public void Init()
-        {
-            onConfigFetched.Subscribe(OnConfigFetched);
-        }
+        public void Init() => onConfigFetched.Subscribe(OnConfigFetched);
 
-        private void OnConfigFetched(JToken token)
+        private void OnDestroy() => onConfigFetched.Unsubscribe(OnConfigFetched);
+
+        protected void OnConfigFetched(JToken token)
         {
             if (token[ConfigKey] != null)
-                DeserializeData(token[ConfigKey].ToString());
+            {
+                Debug.Log($"OnConfig Fetched: key {ConfigKey}, data: {token}");
+                DeserializeData(token[ConfigKey]);
+            }
             else
-                Debug.LogError($"OnConfig Fetched ERROR: key {configKey}, data: {token}, key not found");
+                Debug.LogError($"OnConfig Fetched ERROR: key {ConfigKey}, data: {token}, key not found");
         }
 
-        protected abstract void DeserializeData(string data);
+        protected abstract void DeserializeData(JToken data);
 
         [Button("Add to Config Manager", ButtonSizes.Large)]
         public void AddToConfigManager()

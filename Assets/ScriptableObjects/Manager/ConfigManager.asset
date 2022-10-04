@@ -15,3 +15,4 @@ MonoBehaviour:
   onConfigFetched: {fileID: 11400000, guid: f071cda122b654e0fb6dd3ddeee37dff, type: 2}
   gameConfigs:
   - {fileID: 11400000, guid: a0390284f65154aa196a8c13740718e2, type: 2}
+  - {fileID: 11400000, guid: 508f4fc260f424b5db2e413ec205e072, type: 2}

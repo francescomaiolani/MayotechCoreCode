@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mayotech.SaveLoad;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace Mayotech.Resources
@@ -8,10 +11,15 @@ namespace Mayotech.Resources
     [CreateAssetMenu(menuName = "Manager/ResourceManager")]
     public class ResourceManager : Service, ISaveable, ILoadable
     {
-        [SerializeField] private List<LocalResource> resources;
-        private Dictionary<ResourceType, LocalResource> resourcesDictionary = new();
+        [SerializeField, AutoConnect] protected OnLoadCompletedGameEvent onLoadCompleted;
+        [SerializeField] protected string saveLoadKey;
+        [SerializeField] protected List<LocalResource> resources;
 
-        public LocalResource GetResource(ResourceType resourceType) =>
+        private Dictionary<string, LocalResource> resourcesDictionary = new();
+
+        public string Key => saveLoadKey;
+
+        public LocalResource GetResource(string resourceType) =>
             resourcesDictionary.TryGetValue(resourceType, out var value) ? value : null;
 
         public override void InitService()
@@ -19,14 +27,28 @@ namespace Mayotech.Resources
             Debug.Log("Init resource");
             resourcesDictionary.Clear();
             resources.ForEach(item => resourcesDictionary.Add(item.ResourceType, item));
+            SubscribeLoad();
         }
 
-        public void GainResource(ResourceType resourceType, int amount)
+        public void SubscribeLoad() => onLoadCompleted.Subscribe(OnDataLoaded);
+
+        private void OnDestroy() => onLoadCompleted.Unsubscribe(OnDataLoaded);
+
+        public void OnDataLoaded(Dictionary<string, string> data)
+        {
+            var hasKey = data.ContainsKey(Key);
+            if (!hasKey) return;
+            var serializedData = JsonConvert.DeserializeObject<Dictionary<string, int>>(data[Key]);
+            foreach (var pair in serializedData) 
+                GetResource(pair.Key).Amount = pair.Value;
+        }
+
+        public void GainResource(string resourceType, int amount)
         {
             GetResource(resourceType)?.Add(amount);
         }
 
-        public bool ConsumeResource(ResourceType resourceType, int amount, bool checkResource = true)
+        public bool ConsumeResource(string resourceType, int amount, bool checkResource = true)
         {
             var resource = GetResource(resourceType);
             if (resource == null)
@@ -44,31 +66,27 @@ namespace Mayotech.Resources
             return true;
         }
         
-        public Dictionary<string, object> LoadedObject { get; set; }
-        
-        public Dictionary<string, object> CollectSaveData()
+        public JObject CollectSaveData()
         {
-            return resourcesDictionary.ToDictionary(keyValue => keyValue.Key.Type,
-                keyValue => (object)keyValue.Value.Amount);
+            var data = new JObject();
+            foreach (var pair in resourcesDictionary) 
+                data[pair.Key] = pair.Value.Amount;
+            Debug.Log(data.ToString());
+            return data;
         }
         
-        public HashSet<string> CollectLoadData()
-        {
-            return new HashSet<string>(resourcesDictionary.Keys.Select(item => item.Type));
-        }
-
         [ContextMenu("Save Resources")]
         public void SaveResources()
         {
             var saveManager = ServiceLocator.Instance.SaveManager;
-            saveManager.SaveData("resources", this);
+            saveManager.SaveData(null, null,this);
         }
 
         [ContextMenu("Load Resources")]
         public void LoadResource()
         { 
             var saveManager = ServiceLocator.Instance.SaveManager;
-            saveManager.LoadData("resources",this, LoadedObject);
+            saveManager.LoadData(this);
         }
     }
 }
