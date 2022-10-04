@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f69d1290664a21a166e24c21a5279c, type: 3}
   m_Name: CoinsCurrency
   m_EditorClassIdentifier: 
-  currencyId: {fileID: 11400000, guid: 973e786b8e20c4566ae61db13ab17a62, type: 2}
+  currencyId: COINS
   onCurrencyChangedGameEvent: {fileID: 11400000, guid: a09288fe960e04a01aaeff521c7685ef, type: 2}

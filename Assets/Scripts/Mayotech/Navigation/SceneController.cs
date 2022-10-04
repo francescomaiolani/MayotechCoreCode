@@ -24,9 +24,9 @@ namespace Mayotech.Navigation
         
         public abstract void OnSceneLoaded();
 
-        public async UniTask NavigateAway() => StartSceneAnimations(sceneAnimationData.ExitEffects);
+        public UniTask NavigateAway() => StartSceneAnimations(sceneAnimationData.ExitEffects);
         
-        public async UniTask NavigateHere() => StartSceneAnimations(sceneAnimationData.EnterEffects);
+        public UniTask NavigateHere() => StartSceneAnimations(sceneAnimationData.EnterEffects);
         
         protected UniTask StartSceneAnimations(List<AnimationEffect> effects)
         {

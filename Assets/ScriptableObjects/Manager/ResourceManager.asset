@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d127655bbd441cafd485278fa7914c, type: 3}
   m_Name: ResourceManager
   m_EditorClassIdentifier: 
-  resources:
-  - {fileID: 11400000, guid: 6e09491f9092946e8af59790c964a78e, type: 2}
   onLoadCompleted: {fileID: 11400000, guid: 75d4fd797b9fe476d9167c1f6fb75e17, type: 2}
   saveLoadKey: resource
+  resources:
+  - {fileID: 11400000, guid: 6e09491f9092946e8af59790c964a78e, type: 2}

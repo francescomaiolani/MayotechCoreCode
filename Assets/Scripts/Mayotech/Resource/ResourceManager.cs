@@ -26,7 +26,7 @@ namespace Mayotech.Resources
         {
             Debug.Log("Init resource");
             resourcesDictionary.Clear();
-            resources.ForEach(item => resourcesDictionary.Add(item.ResourceType, item));
+            resourcesDictionary = resources.ToDictionary(item => item.ResourceType, item => item);
             SubscribeLoad();
         }
 
@@ -78,15 +78,26 @@ namespace Mayotech.Resources
         [ContextMenu("Save Resources")]
         public void SaveResources()
         {
-            var saveManager = ServiceLocator.Instance.SaveManager;
+            var saveManager = ServiceLocator.Instance.SaveManager; 
             saveManager.SaveData(null, null,this);
         }
 
         [ContextMenu("Load Resources")]
-        public void LoadResource()
+        public async void LoadResource()
         { 
             var saveManager = ServiceLocator.Instance.SaveManager;
-            saveManager.LoadData(this);
+            await saveManager.LoadData(this);
+        }
+
+        public void AddResourceToList(LocalResource localResource)
+        {
+            if (resources.Contains(localResource))
+                Debug.LogError($"Item: {localResource.ResourceType} already added");
+            else
+            {
+                resources.Add(localResource);
+                Debug.Log($"Item added {localResource.ResourceType}");
+            }
         }
     }
 }

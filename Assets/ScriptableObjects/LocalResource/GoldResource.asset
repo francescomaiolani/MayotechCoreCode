@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37886dfd91f24d528e8c5610235f7dac, type: 3}
   m_Name: GoldResource
   m_EditorClassIdentifier: 
-  resourceType: {fileID: 11400000, guid: a809fe833d2b440f3aad4c0a0a671035, type: 2}
+  resourceType: gold
   resourceChangedEvent: {fileID: 11400000, guid: d0db6ded969d14a708c43e8530caabb8, type: 2}
-  amount: 80
+  amount: 69
