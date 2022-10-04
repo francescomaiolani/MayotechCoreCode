@@ -3,8 +3,14 @@ using Newtonsoft.Json;
 
 namespace Mayotech.CloudCode
 {
+    public interface ICloudCodeResponse
+    {
+        CloudCodeError Error { get; }
+        bool HasErrors { get; }
+    }
+    
     [Serializable]
-    public abstract class CloudCodeResponse
+    public abstract class CloudCodeResponse : ICloudCodeResponse
     {
         [JsonProperty("error")]
         protected CloudCodeError error;

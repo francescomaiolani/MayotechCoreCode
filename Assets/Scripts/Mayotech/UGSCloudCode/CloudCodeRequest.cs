@@ -7,8 +7,15 @@ using UnityEngine;
 
 namespace Mayotech.CloudCode
 {
+    /// <summary>
+    /// Class that represents a request to the CloudCode Service. Takes a ICloudCodeResponse as a response.
+    /// Use new() to create a request of a specific remote call. Add to the request all the parameters needed. Subscribe
+    /// callbacks for the success, fail and completion of the remote call. You can do it by either adding them individually
+    /// or by passing them as actions in the CloudCodeManager.
+    /// </summary>
+    /// <typeparam name="TResponse">Type of the Response</typeparam>
     [Serializable]
-    public abstract class CloudCodeRequest<TResponse> : ICloudCodeRequest<TResponse> where TResponse : CloudCodeResponse
+    public abstract class CloudCodeRequest<TResponse> : ICloudCodeRequest<TResponse> where TResponse : ICloudCodeResponse
     {
         protected ICloudCodeService CloudCode => CloudCodeService.Instance;
 

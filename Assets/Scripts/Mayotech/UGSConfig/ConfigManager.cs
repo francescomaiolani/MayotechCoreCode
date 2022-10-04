@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Mayotech.UGSEconomy.Currency;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sirenix.OdinInspector;
 using Unity.Services.RemoteConfig;
+using UnityEditor;
 using UnityEngine;
 
 namespace Mayotech.UGSConfig
@@ -85,6 +88,36 @@ namespace Mayotech.UGSConfig
             }
             else
                 Debug.LogError($"Config {config.name} already added");
+        }
+
+        /// <summary>
+        /// Adds the configs to the list (Editor only)
+        /// </summary>
+        [Button("Add all project currencies", ButtonSizes.Large), GUIColor(0.3f, 0.8f, 0.8f, 1f)]
+        public void AddAllProjectConfigsToList()
+        {
+#if UNITY_EDITOR
+            var guids = AssetDatabase.FindAssets("t: Config");
+            foreach (var guid in guids)
+            {
+                var config = AssetDatabase.LoadAssetAtPath<Config>(AssetDatabase.GUIDToAssetPath(guid));
+                AddConfigsToList(config);
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Adds the config to the list (Editor only)
+        /// </summary>
+        private void AddConfigsToList(Config config)
+        {
+            if (gameConfigs.Contains(config))
+                Debug.LogError($"Resource already added: {config.ConfigKey}");
+            else
+            {
+                gameConfigs.Add(config);
+                Debug.Log($"Currency added {config.ConfigKey}");
+            }
         }
 
         public struct userAttributes { }

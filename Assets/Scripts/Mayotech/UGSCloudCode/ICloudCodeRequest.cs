@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Mayotech.CloudCode
 {
-    public interface ICloudCodeRequest<TResponse>
+    public interface ICloudCodeRequest<TResponse> where TResponse : ICloudCodeResponse
     {
         ICloudCodeRequest<TResponse> AddSuccessCallback(Action<TResponse> onSuccess);
         ICloudCodeRequest<TResponse> AddFailCallback(Action<Exception> onFail);
