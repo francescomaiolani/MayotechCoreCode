@@ -172,6 +172,55 @@ MonoBehaviour:
   onLoadingOperationFailed: {fileID: 11400000, guid: 3c6dd36bcbc6249f6b5a8fb424669481, type: 2}
   dependenciesOperation:
   - {fileID: 1418632218}
+--- !u!1 &192132164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 192132166}
+  - component: {fileID: 192132167}
+  m_Layer: 0
+  m_Name: CloudCode - LoadOp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &192132166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192132164}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1589250554}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &192132167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192132164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ce3deb78c9f4bcf99a774febdfa768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  status: 0
+  onLoadingOperationCompleted: {fileID: 11400000, guid: 28764524b7e064f3da8336c6f7cbea26, type: 2}
+  onLoadingOperationFailed: {fileID: 11400000, guid: 3c6dd36bcbc6249f6b5a8fb424669481, type: 2}
+  dependenciesOperation:
+  - {fileID: 1418632218}
 --- !u!1 &225667759
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +258,7 @@ MonoBehaviour:
   - {fileID: 1512611493}
   - {fileID: 177659673}
   - {fileID: 399384405}
+  - {fileID: 192132167}
   onAppLoadingCompleted: {fileID: 11400000, guid: 82fe64193e2ab4f66b1e61f584970055, type: 2}
 --- !u!4 &225667761
 Transform:
@@ -397,6 +447,8 @@ MonoBehaviour:
   storeManager: {fileID: 11400000, guid: 29c3e2a2b9a314a6eb5fce033e513155, type: 2}
   settingsManager: {fileID: 11400000, guid: 1944c9afef8904032a8009e9d368dd97, type: 2}
   configManager: {fileID: 11400000, guid: 41206b29f9cca495ba509befb1247120, type: 2}
+  toastManager: {fileID: 11400000, guid: 3b7f43122d83a44ce842873c27f88493, type: 2}
+  cloudCodeManager: {fileID: 11400000, guid: d9d0a9597f62f4b9ba115a101b189f35, type: 2}
 --- !u!4 &931459299
 Transform:
   m_ObjectHideFlags: 0
@@ -650,6 +702,7 @@ Transform:
   - {fileID: 1512611492}
   - {fileID: 177659672}
   - {fileID: 399384404}
+  - {fileID: 192132166}
   m_Father: {fileID: 225667761}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -16,6 +16,10 @@ namespace Mayotech.UGSAuthentication
     {
         [SerializeField] protected PersistentInt previousAuthenticationMethod;
         [SerializeField,AutoConnect] protected GuestUserAuthentication guestUserAuthentication;
+        [SerializeField,AutoConnect] protected FacebookUserAuthentication facebookUserAuthentication;
+        [SerializeField,AutoConnect] protected GoogleUserAuthentication googleUserAuthentication;
+        [SerializeField,AutoConnect] protected GooglePlayGamesUserAuthentication googlePlayGamesUserAuthentication;
+        [SerializeField,AutoConnect] protected AppleUserAuthentication appleUserAuthentication;
         [SerializeField,AutoConnect] protected List<Environment> environments;
         [SerializeField] protected Environment currentEnvironment;
 
@@ -33,32 +37,57 @@ namespace Mayotech.UGSAuthentication
         {
             switch (authenticationMethod)
             {
-                case AuthenticationMethod.None:
-                    break;
-                case AuthenticationMethod.Guest:
-                    await SignInAnonymously();
-                    break;
                 case AuthenticationMethod.Facebook:
+                    await SignInWithFacebook();
                     break;
                 case AuthenticationMethod.Google:
+                    await SignInWithGoogle();
                     break;
                 case AuthenticationMethod.GooglePlayServices:
+                    await SignInWithGooglePlayGames();
                     break;
                 case AuthenticationMethod.Apple:
+                    await SignInWithApple();
                     break;
+                case AuthenticationMethod.None:
+                case AuthenticationMethod.Guest:
                 default:
                     await SignInAnonymously();
                     break;
             }
         }
-    
-        public UniTask SignInAnonymously()
+
+        private UniTask SignInAnonymously()
         {
             SubscribeAuthenticationCallbacks();
             return guestUserAuthentication.SignIn();
         }
-    
-        public void SubscribeAuthenticationCallbacks()
+
+        private UniTask SignInWithFacebook()
+        {
+            SubscribeAuthenticationCallbacks();
+            return facebookUserAuthentication.SignIn();
+        }
+
+        private UniTask SignInWithGoogle()
+        {
+            SubscribeAuthenticationCallbacks();
+            return googleUserAuthentication.SignIn();
+        }
+
+        private UniTask SignInWithGooglePlayGames()
+        {
+            SubscribeAuthenticationCallbacks();
+            return googlePlayGamesUserAuthentication.SignIn();
+        }
+
+        private UniTask SignInWithApple()
+        {
+            SubscribeAuthenticationCallbacks();
+            return appleUserAuthentication.SignIn();
+        }
+
+        private void SubscribeAuthenticationCallbacks()
         {
             AuthenticationService.Instance.SignedIn += OnPlayerSignedIn;
             AuthenticationService.Instance.SignInFailed += OnPlayerSignedInFailed;

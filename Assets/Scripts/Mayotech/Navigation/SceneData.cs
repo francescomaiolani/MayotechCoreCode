@@ -12,7 +12,7 @@ namespace Mayotech.Navigation
         [SerializeField] protected SceneType sceneType;
         [SerializeField] protected bool keepLoaded;
         [SerializeField] protected bool saveInSceneHistory;
-        
+
         public string SceneName => sceneName;
         public SceneType SceneType => sceneType;
         public bool KeepLoaded => keepLoaded;
@@ -20,24 +20,27 @@ namespace Mayotech.Navigation
 
         private void OnValidate()
         {
-            if (keepLoaded && !saveInSceneHistory) 
+            if (keepLoaded && !saveInSceneHistory)
                 keepLoaded = false;
-            if (navigationManager == null) 
+            if (navigationManager == null)
                 GetNavigationManager();
         }
-        
+
         private void GetNavigationManager()
         {
+#if UNITY_EDITOR
             var guid = AssetDatabase.FindAssets("t: NavigationManager")[0];
             if (guid == null) return;
             var path = AssetDatabase.GUIDToAssetPath(guid);
             navigationManager = AssetDatabase.LoadAssetAtPath<NavigationManager>(path);
+#endif
         }
-        
+
         private NavigationManager navigationManager;
-        
+
         [ContextMenu("Add Scene")]
         public void AddSceneToNavigationManager() => navigationManager?.AddScene(this);
+
         [ContextMenu("Add Preload Scene")]
         public void AddPreloadSceneToNavigationManager() => navigationManager?.AddPreloadScene(this);
     }

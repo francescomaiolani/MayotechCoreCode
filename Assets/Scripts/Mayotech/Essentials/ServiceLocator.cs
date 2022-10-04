@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Mayotech.CloudCode;
 using Mayotech.Missions;
 using Mayotech.Navigation;
 using Mayotech.Player;
@@ -7,6 +8,7 @@ using Mayotech.Resources;
 using Mayotech.SaveLoad;
 using Mayotech.Settings;
 using Mayotech.Store;
+using Mayotech.Toast;
 using Mayotech.UGSAuthentication;
 using Mayotech.UGSConfig;
 using Mayotech.UGSEconomy.Currency;
@@ -28,6 +30,8 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     [SerializeField, AutoConnect] protected StoreManager storeManager;
     [SerializeField, AutoConnect] protected SettingsManager settingsManager;
     [SerializeField, AutoConnect] protected ConfigManager configManager;
+    [SerializeField, AutoConnect] protected ToastManager toastManager;
+    [SerializeField, AutoConnect] protected CloudCodeManager cloudCodeManager;
 
     public NavigationManager NavigationManager => navigationManager;
     public MissionManager MissionManager => missionManager;
@@ -41,6 +45,8 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     public StoreManager StoreManager => storeManager;
     public SettingsManager SettingsManager => settingsManager;
     public ConfigManager ConfigManager => configManager;
+    public ToastManager ToastManager => toastManager;
+    public CloudCodeManager CloudCodeManager => cloudCodeManager;
 
     private void Start()
     {

@@ -24,8 +24,8 @@ namespace Mayotech.AppLoading
         {
             try
             {
-                appLoadingOperations.ForEach(operation => operation.InitOperation());
-                appLoadingOperations.ForEach(operation => operation.CheckDependencies());
+                appLoadingOperations.ForEach(operation => operation?.InitOperation());
+                appLoadingOperations.ForEach(operation => operation?.CheckDependencies());
                 var tasks = appLoadingOperations.Select(item => item.OperationTask);
                 await UniTask.WhenAll(tasks);
                 Debug.Log("Loading finished");

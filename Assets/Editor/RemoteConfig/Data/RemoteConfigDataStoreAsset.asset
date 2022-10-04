@@ -12,26 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"853389dd-fd64-49fb-9b6e-b56e492d7e6e\"\n   
-    },\n    \"rs\": {\n      \"key\": \"playerData\",\n      \"type\": \"json\",\n     
-    \"schemaId\": null,\n      \"value\": {\n        \"playerID\": \"AAAAA99999\",\n       
-    \"sessionToken\": \"BBBBB\"\n      }\n    }\n  },\n  {\n    \"metadata\": {\n     
-    \"entityId\": \"44a06f0c-aaa1-4080-9617-c87027882746\"\n    },\n    \"rs\": {\n     
-    \"key\": \"otherConfig\",\n      \"type\": \"json\",\n      \"schemaId\": null,\n     
-    \"value\": {\n        \"prova\": 9\n      }\n    }\n  },\n  {\n    \"metadata\":
-    {\n      \"entityId\": \"bd7c842e-114c-4715-9d40-234ebf309515\"\n    },\n   
-    \"rs\": {\n      \"key\": \"number\",\n      \"type\": \"int\",\n      \"value\":
-    5\n    }\n  }\n]"
-  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"853389dd-fd64-49fb-9b6e-b56e492d7e6e\"\n   
-    },\n    \"rs\": {\n      \"key\": \"playerData\",\n      \"type\": \"json\",\n     
-    \"schemaId\": null,\n      \"value\": {\n        \"playerID\": \"AAAAA99999\",\n       
-    \"sessionToken\": \"BBBBB\"\n      }\n    }\n  },\n  {\n    \"metadata\": {\n     
-    \"entityId\": \"44a06f0c-aaa1-4080-9617-c87027882746\"\n    },\n    \"rs\": {\n     
-    \"key\": \"otherConfig\",\n      \"type\": \"json\",\n      \"schemaId\": null,\n     
-    \"value\": {\n        \"prova\": 9\n      }\n    }\n  },\n  {\n    \"metadata\":
-    {\n      \"entityId\": \"bd7c842e-114c-4715-9d40-234ebf309515\"\n    },\n   
-    \"rs\": {\n      \"key\": \"number\",\n      \"type\": \"int\",\n      \"value\":
-    5\n    }\n  }\n]"
+  _rsKeyList: '[]'
+  _rsLastCachedKeyList: '[]'
   _environments: "[\n  {\n    \"projectId\": \"5332fe6f-e4c9-44cc-8bc4-b1e1200a711e\",\n   
     \"name\": \"development\",\n    \"id\": \"3079109e-b8e2-4361-8fde-fa8f7827e637\",\n   
     \"isDefault\": false,\n    \"createdAt\": \"2022-10-02T16:06:22Z\",\n    \"updatedAt\":
