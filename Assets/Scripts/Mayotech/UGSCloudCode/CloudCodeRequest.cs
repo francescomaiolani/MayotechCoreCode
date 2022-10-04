@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Mayotech.CloudCode
 {
     [Serializable]
-    public abstract class CloudCodeRequest<TResponse> where TResponse : CloudCodeResponse
+    public abstract class CloudCodeRequest<TResponse> : ICloudCodeRequest<TResponse> where TResponse : CloudCodeResponse
     {
         protected ICloudCodeService CloudCode => CloudCodeService.Instance;
 
@@ -19,38 +19,38 @@ namespace Mayotech.CloudCode
         public virtual string RpcName { get; }
         protected Dictionary<string, object> Parameters { get; } = new();
         
-        public CloudCodeRequest<TResponse> AddSuccessCallback(Action<TResponse> onSuccess)
+        public ICloudCodeRequest<TResponse> AddSuccessCallback(Action<TResponse> onSuccess)
         {
             this.onSuccess = onSuccess;
             return this;
         }
         
-        public CloudCodeRequest<TResponse> AddFailCallback(Action<Exception> onFail)
+        public ICloudCodeRequest<TResponse> AddFailCallback(Action<Exception> onFail)
         {
             this.onFail = onFail;
             return this;
         }
         
-        public CloudCodeRequest<TResponse> AddFinallyCallback(Action onFinally)
+        public ICloudCodeRequest<TResponse> AddFinallyCallback(Action onFinally)
         {
             this.onFinally = onFinally;
             return this;
         }
-
-        public CloudCodeRequest<TResponse> AddObject(string key, object value) =>
+ 
+        public ICloudCodeRequest<TResponse> AddObject(string key, object value) =>
             AddJson(key, JsonConvert.SerializeObject(value));
 
-        public CloudCodeRequest<TResponse> AddFloat(string key, float value) => AddValue(key, value);
+        public ICloudCodeRequest<TResponse> AddFloat(string key, float value) => AddValue(key, value);
 
-        public CloudCodeRequest<TResponse> AddInt(string key, int value) => AddValue(key, value);
+        public ICloudCodeRequest<TResponse> AddInt(string key, int value) => AddValue(key, value);
 
-        public CloudCodeRequest<TResponse> AddJson(string key, string value) => AddValue(key, value);
+        public ICloudCodeRequest<TResponse> AddJson(string key, string value) => AddValue(key, value);
 
-        public CloudCodeRequest<TResponse> AddString(string key, string value) => AddValue(key, value);
+        public ICloudCodeRequest<TResponse> AddString(string key, string value) => AddValue(key, value);
 
-        public CloudCodeRequest<TResponse> AddBool(string key, bool value) => AddValue(key, value);
+        public ICloudCodeRequest<TResponse> AddBool(string key, bool value) => AddValue(key, value);
 
-        private CloudCodeRequest<TResponse> AddValue<T>(string key, T value)
+        private ICloudCodeRequest<TResponse> AddValue<T>(string key, T value)
         {
             Parameters.Add(key, value);
             return this;

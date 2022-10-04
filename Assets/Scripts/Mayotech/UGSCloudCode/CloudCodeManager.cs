@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-using Unity.Services.CloudCode;
 using UnityEngine;
 
 namespace Mayotech.CloudCode
@@ -11,13 +10,20 @@ namespace Mayotech.CloudCode
     [CreateAssetMenu(fileName = "CloudCodeManager", menuName = "Manager/CloudCodeManager")]
     public class CloudCodeManager : Service
     {
-        private ICloudCodeService CloudCode => CloudCodeService.Instance;
-
         public override void InitService() { }
 
+        /// <summary>
+        /// Sends a CloudCode Request with PREFILLED parameters, with callbacks on post actions 
+        /// </summary>
+        /// <param name="request">the request object with filled parameters</param>
+        /// <param name="onSuccess">callback on success</param>
+        /// <param name="onFail">callback on fail</param>
+        /// <param name="onFinally">callback on finally</param>
+        /// <typeparam name="TRequest">Type of the request</typeparam>
+        /// <typeparam name="TResponse">Type of the response</typeparam>
         public void SendRequest<TRequest, TResponse>(TRequest request, Action<TResponse> onSuccess = null,
             Action<Exception> onFail = null, Action onFinally = null)
-            where TRequest : CloudCodeRequest<TResponse> where TResponse : CloudCodeResponse
+            where TRequest : ICloudCodeRequest<TResponse> where TResponse : CloudCodeResponse
         {
             request.AddSuccessCallback(onSuccess);
             request.AddFailCallback(onFail);
@@ -27,15 +33,10 @@ namespace Mayotech.CloudCode
 
         public async UniTask SendTestRequest()
         {
-            await new TestRequest()
-                .AddSuccessCallback(response =>
-                {
-                    Debug.Log($"request Success: {JsonConvert.SerializeObject(response)}");
-                })
-                .AddFailCallback(exception => { Debug.Log($"request failed: {exception}"); })
-                .AddFinallyCallback(() => { Debug.Log($"finally"); })
-                .AddJson("data", "{}")
-                .Call();
+            var testRequest = new TestRequest().AddJson("data", "{}");
+            SendRequest<ICloudCodeRequest<TestResponse>, TestResponse>(testRequest,
+                response => { Debug.Log($"request Success: {JsonConvert.SerializeObject(response)}"); },
+                exception => { Debug.Log($"request failed: {exception}"); });
         }
     }
 }
