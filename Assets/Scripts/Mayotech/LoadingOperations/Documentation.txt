@@ -1,0 +1,12 @@
+Documentazione AppLoading Operation
+
+Un'AppLoadingOperation è un'operazione tendenzialmente asincrona che si inserisce nel flusso di openApp.
+
+Per creare una nuova AppLoadingOperation è necessario:
+1) Creare una nuova classe derivante da AppLoadingOperation;
+2) Create il metodo StartOperation overridando quello della base class ma chiamando SEMPRE il base method;
+3) Eseguire le operazioni asincrone specifiche 
+4) Settare sempre la property Status a LoadingOperationStatus.Completed se l'operazione è andata a buon fine
+5) Aggiungere l'AppLoadingOperation alla lista delle AppLoadingOperation dell'AppInitializer
+
+Si possono specificare delle altre AppLoadingOperation che devono essere eseguite prima dell'operazione in questione 

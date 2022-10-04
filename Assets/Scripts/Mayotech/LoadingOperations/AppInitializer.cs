@@ -11,9 +11,9 @@ namespace Mayotech.AppLoading
     public class AppInitializer : MonoBehaviour
     {
         private NavigationManager NavigationManager => ServiceLocator.Instance.NavigationManager;
-        
-        [SerializeField] private List<AppLoadingOperation> appLoadingOperations;
+       
         [SerializeField, AutoConnect] private OnAppLoadingCompletedGameEvent onAppLoadingCompleted;
+        [SerializeField] private List<AppLoadingOperation> appLoadingOperations;
 
         private void Start()
         {
@@ -28,7 +28,7 @@ namespace Mayotech.AppLoading
                 appLoadingOperations.ForEach(operation => operation?.CheckDependencies());
                 var tasks = appLoadingOperations.Select(item => item.OperationTask);
                 await UniTask.WhenAll(tasks);
-                Debug.Log("Loading finished");
+                Debug.Log("Loading completed");
                 NavigationManager.EnqueueNavigation(new ForwardNavigationRequest("Home"));
                 onAppLoadingCompleted?.RaiseEvent();
             }

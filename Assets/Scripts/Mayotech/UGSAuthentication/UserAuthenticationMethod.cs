@@ -8,10 +8,6 @@ namespace Mayotech.UGSAuthentication
 {
     public abstract class UserAuthenticationMethod : ScriptableObject, ISignInMethod
     {
-        [SerializeField] protected GameEvent onPlayerSignedIn;
-
-        public GameEvent OnPlayerSignedIn => onPlayerSignedIn;
-
         protected abstract UniTask SpecificSignIn();
 
         public virtual async UniTask SignIn()
@@ -19,8 +15,6 @@ namespace Mayotech.UGSAuthentication
             try
             {
                 await SpecificSignIn();
-                OnPlayerSignedIn?.RaiseEvent();
-                Debug.Log("Sign in anonymously succeeded!");
             }
             catch (AuthenticationException ex)
             {

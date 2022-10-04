@@ -1,0 +1,13 @@
+Documentazione UGSAuthentication
+
+UGSAuthentication è il servizio per l'autenticazione dell'utente 
+E' possibile autenticarsi con tutti i vari provider o come guest.
+In caso di provider diversi da guest è necessario seguire le operazioni dalla Unity doc e aggiungere poi l'id nello
+ScriptableObject dello UserAuthenticationMethod
+
+Per autenticare un'utente è necessario solo chiamare il metodo SignIn dell'AuthenticationManager
+Il sistema si basa di default sull'ultimo provider utilizzato per autenticarsi ma ovviamente è possibile settare un diverso 
+provider prima di eseguire la SignIn.
+Una serie di callback gestiscono il successo dell'operazione
+
+

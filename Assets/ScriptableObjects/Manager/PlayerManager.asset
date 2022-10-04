@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerManager
   m_EditorClassIdentifier: 
   onPlayerSignedIn: {fileID: 11400000, guid: f33e0123a25e44588a480e2955774668, type: 2}
-  playerData: []
+  playerId: {fileID: 11400000, guid: 7f82aa6df19e443eeb3efabf63ec8568, type: 2}
+  sessionToken: {fileID: 11400000, guid: e9f9d7c2011354dffb99200bc7610285, type: 2}

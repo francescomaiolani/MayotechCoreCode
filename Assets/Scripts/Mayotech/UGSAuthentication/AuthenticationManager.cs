@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using UnityEditor;
 using UnityEngine;
 
 namespace Mayotech.UGSAuthentication
@@ -14,6 +12,7 @@ namespace Mayotech.UGSAuthentication
     [CreateAssetMenu(menuName = "Manager/AuthenticationManager")]
     public class AuthenticationManager : Service
     {
+        [SerializeField] protected GameEvent onPlayerSignedIn;
         [SerializeField] protected PersistentInt previousAuthenticationMethod;
         [SerializeField,AutoConnect] protected GuestUserAuthentication guestUserAuthentication;
         [SerializeField,AutoConnect] protected FacebookUserAuthentication facebookUserAuthentication;
@@ -32,7 +31,9 @@ namespace Mayotech.UGSAuthentication
             authenticationMethod = (AuthenticationMethod)previousAuthenticationMethod.Value;
             Debug.Log($"Authentication method: {authenticationMethod}");
         }
-        
+
+        private void OnDestroy() => UnsubscribeAuthenticationCallbacks();
+
         public async UniTask SignIn()
         {
             switch (authenticationMethod)
@@ -105,7 +106,8 @@ namespace Mayotech.UGSAuthentication
 
         private void OnPlayerSignedIn()
         {
-            
+            Debug.Log("Player signed in.");
+            onPlayerSignedIn?.RaiseEvent();
         }
 
         private void OnPlayerSignedInFailed(RequestFailedException exception)

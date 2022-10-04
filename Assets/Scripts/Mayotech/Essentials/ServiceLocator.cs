@@ -32,6 +32,7 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     [SerializeField, AutoConnect] protected ConfigManager configManager;
     [SerializeField, AutoConnect] protected ToastManager toastManager;
     [SerializeField, AutoConnect] protected CloudCodeManager cloudCodeManager;
+    [SerializeField, AutoConnect] protected AnalyticsManager analyticsManager;
 
     public NavigationManager NavigationManager => navigationManager;
     public MissionManager MissionManager => missionManager;
@@ -47,6 +48,7 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     public ConfigManager ConfigManager => configManager;
     public ToastManager ToastManager => toastManager;
     public CloudCodeManager CloudCodeManager => cloudCodeManager;
+    public AnalyticsManager AnalyticsManager => analyticsManager;
 
     private void Start()
     {

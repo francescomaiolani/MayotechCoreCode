@@ -21,10 +21,6 @@ namespace Mayotech.UGSEconomy.Currency
 
         public override void InitService()
         {
-            EconomyBalances.BalanceUpdated += currencyID =>
-            {
-                Debug.Log($"The currency that was updated was {currencyID}");
-            };
             currenciesDictionary.Clear();
             currenciesDictionary = allCurrencies.ToDictionary(item => item.CurrencyId, item => item);
         }

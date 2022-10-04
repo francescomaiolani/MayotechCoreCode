@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82668dd09c51f46a7afb8adb50531931, type: 3}
   m_Name: AuthenticationManager
   m_EditorClassIdentifier: 
+  onPlayerSignedIn: {fileID: 11400000, guid: f33e0123a25e44588a480e2955774668, type: 2}
   previousAuthenticationMethod: {fileID: 11400000, guid: 43db786382d2841399bcaeef457366f6, type: 2}
   guestUserAuthentication: {fileID: 11400000, guid: a2066eb8c89134f11a912ea831bf86e8, type: 2}
+  facebookUserAuthentication: {fileID: 11400000, guid: ffca037ce60714a2393bd19f632fa5c7, type: 2}
+  googleUserAuthentication: {fileID: 11400000, guid: 39f0a258a3143435787d2048a09698f1, type: 2}
+  googlePlayGamesUserAuthentication: {fileID: 11400000, guid: 388f9a6254879467a8344244c2c5fef0, type: 2}
+  appleUserAuthentication: {fileID: 11400000, guid: 88af925de69fa4d5ca8c57abcb1c24a1, type: 2}
   environments:
   - {fileID: 11400000, guid: 92a93b36c248d452986e725867705f05, type: 2}
   - {fileID: 11400000, guid: 9900bb92602db4944af22c81ee3dc669, type: 2}
