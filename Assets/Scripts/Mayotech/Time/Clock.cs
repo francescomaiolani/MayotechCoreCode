@@ -10,9 +10,8 @@ namespace Mayotech.SafeTime
     {
         public DateTime UtcNow { get; set; }
         protected Stopwatch serverTimeStopwatch = new(); 
-        protected DateTime CurrentUtcTime => UtcNow + serverTimeStopwatch.Elapsed;
-
-        protected readonly DateTime startEpochTime = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        
+        public DateTime CurrentUtcTime => UtcNow + serverTimeStopwatch.Elapsed;
         
         public void SetServerTime(DateTime serverDateTime)
         {

@@ -503,6 +503,8 @@ MonoBehaviour:
   cloudCodeManager: {fileID: 11400000, guid: d9d0a9597f62f4b9ba115a101b189f35, type: 2}
   analyticsManager: {fileID: 11400000, guid: 12c2bc41c8fad431cbbc69e083ddfe1d, type: 2}
   timeManager: {fileID: 11400000, guid: f9eab254435e54119a1405129a33e4fc, type: 2}
+  onApplicationPause: {fileID: 11400000, guid: 686b8aaba3ceb4ade9d35a303474fc1f, type: 2}
+  onApplicationQuit: {fileID: 11400000, guid: c49327279492349d888c95e8e520a511, type: 2}
 --- !u!4 &931459299
 Transform:
   m_ObjectHideFlags: 0
