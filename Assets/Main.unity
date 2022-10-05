@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d171cc1544f4bc49edce3a35ebbf9b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAppLoadingCompleted: {fileID: 11400000, guid: 82fe64193e2ab4f66b1e61f584970055, type: 2}
   appLoadingOperations:
   - {fileID: 1538417000}
   - {fileID: 1418632218}
@@ -260,7 +261,6 @@ MonoBehaviour:
   - {fileID: 399384405}
   - {fileID: 192132167}
   - {fileID: 1807738487}
-  onAppLoadingCompleted: {fileID: 11400000, guid: 82fe64193e2ab4f66b1e61f584970055, type: 2}
 --- !u!4 &225667761
 Transform:
   m_ObjectHideFlags: 0
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b17a8c2a5474755a3edbe2a1f2cdd45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneAnimationData: {fileID: 0}
+  sceneAnimationData: {fileID: 11400000, guid: 1d9c36a3cd22a41d59b4f0da74367ed7, type: 2}
   canvasGroup: {fileID: 0}
   content: {fileID: 0}
 --- !u!4 &879706383

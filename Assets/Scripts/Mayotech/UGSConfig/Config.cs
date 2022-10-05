@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace Mayotech.UGSConfig
 {
+    /// <summary>
+    /// a Config is a SO that represent locally a RemoteConfig of UGS.
+    /// It gets automatically populated with the data coming from Fetch of the the ConfigManager and logs an error if
+    /// it doesn't found the corresponding config among the ones fetched. 
+    /// </summary>
     [Serializable]
     public abstract class Config : ScriptableObject
     {
@@ -30,6 +35,10 @@ namespace Mayotech.UGSConfig
                 Debug.LogError($"OnConfig Fetched ERROR: key {ConfigKey}, data: {token}, key not found");
         }
 
+        /// <summary>
+        /// Deserializes the JToken into the generic Data field of the config
+        /// </summary>
+        /// <param name="data"></param>
         protected abstract void DeserializeData(JToken data);
 
         [Button("Add to Config Manager", ButtonSizes.Large)]
@@ -40,7 +49,7 @@ namespace Mayotech.UGSConfig
             foreach (var guid in guids)
             {
                 var configManager = AssetDatabase.LoadAssetAtPath<ConfigManager>(AssetDatabase.GUIDToAssetPath(guid));
-                configManager.AddConfig(this);
+                configManager.AddConfigToList(this);
             }
             #endif
         }

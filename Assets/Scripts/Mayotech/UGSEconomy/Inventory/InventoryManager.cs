@@ -220,6 +220,26 @@ namespace Mayotech.UGSEconomy.Inventory
                 onFail?.Invoke(e);
             }
         }
+        
+        public void OnPurchaseCompleted(MakeVirtualPurchaseResult result)
+        {
+            foreach (var itemPaid in result.Costs.Inventory)
+                UpdateLocalItemBalance(itemPaid.Id,itemPaid.Amount, itemPaid.PlayersInventoryItemIds, true);
+            foreach (var itemObtained in result.Rewards.Inventory)
+                UpdateLocalItemBalance(itemObtained.Id,itemObtained.Amount, itemObtained.PlayersInventoryItemIds, false);
+        }
+
+        private void UpdateLocalItemBalance(string itemId, int itemAmount, List<string> playersInventoryItemIds, bool remove)
+        {
+            var item = GetScriptableItemOfType(itemId);
+            if (item == null)
+            {
+                Debug.LogError($"Item {item.InventoryId} not found");
+                return;
+            }
+            if (remove)
+                item.RemoveInventoryItemInstance(playersInventoryItemIds.ToArray());
+        }
 
         /// <summary>
         /// Utility method for the editor to add a scriptableItem

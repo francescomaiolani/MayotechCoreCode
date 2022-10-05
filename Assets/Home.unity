@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b17a8c2a5474755a3edbe2a1f2cdd45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneAnimationConfig: {fileID: 11400000, guid: 1d9c36a3cd22a41d59b4f0da74367ed7, type: 2}
+  sceneAnimationData: {fileID: 11400000, guid: 1d9c36a3cd22a41d59b4f0da74367ed7, type: 2}
   canvasGroup: {fileID: 1265310335}
   content: {fileID: 1265310334}
 --- !u!4 &1248669743

@@ -1,0 +1,18 @@
+Documentazione UGSConfig
+
+UGSConfig è il servizio per la gestione delle configs del giocatore.
+Le config vengono scaricate in blocco come AppLoadingOperation tramite la FetchAllConfigs, vengono poi salvate internamente 
+come JToken nel ConfigManager e mandate ai rispettivi ScriptableObject di tipo Config che sottoscrivono l'evento
+OnConfigFetched;
+N.B: A causa di un bgu di Unity con il modulo Economy la FetchConfigsAsync ritorna le config di tipo economy e non quelle
+di tipo settings. Per questo motivo le config prese dall'evento OnFetchCompleted e accedute dal percorso "config/settings".
+E' possibile autenticarsi con tutti i vari provider o come guest.
+In caso di provider diversi da guest è necessario seguire le operazioni dalla Unity doc e aggiungere poi l'id nello
+ScriptableObject dello UserAuthenticationMethod
+
+Per autenticare un'utente è necessario solo chiamare il metodo SignIn dell'AuthenticationManager
+Il sistema si basa di default sull'ultimo provider utilizzato per autenticarsi ma ovviamente è possibile settare un diverso 
+provider prima di eseguire la SignIn.
+Una serie di callback gestiscono il successo dell'operazione
+
+

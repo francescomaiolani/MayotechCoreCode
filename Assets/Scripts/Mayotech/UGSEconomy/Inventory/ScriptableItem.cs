@@ -52,6 +52,11 @@ namespace Mayotech.UGSEconomy.Inventory
             onItemChanged?.RaiseEvent(new []{itemInstance});
         }
 
+        public void RemoveInventoryItemInstance(params string[] itemInstancesId)
+        {
+            InventoryItems.RemoveAll(item => itemInstancesId.Contains(item.PlayersInventoryItemId));
+        }
+
         [Button("Add Item to Manager", ButtonSizes.Large), GUIColor(0.3f, 0.8f, 0.8f, 1f)]
         public void AddItemToConfig()
         {

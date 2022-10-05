@@ -14,6 +14,10 @@ using UnityEngine;
 namespace Mayotech.UGSConfig
 {
     /// <summary>
+    /// Config Manager is the class that handles the Config fetch and dispatch to the ScriptableObject of type Config
+    /// that represents a specific config of the game. All the configs are stored as a JToken (Dictionary<string, string>)
+    /// and injected into the SO with the onConfigFetched GameEvent.
+    /// 
     /// BUG with unity economy package. Economy configs get pulled even if they shouldn't be taken into consideration
     /// </summary>
     /// 
@@ -30,6 +34,11 @@ namespace Mayotech.UGSConfig
         private const string CONFIGS = "configs";
         private const string SETTINGS = "settings";
 
+        /// <summary>
+        /// Retrives a specific Config from the dictionary of the ScriptableObjects of type Config
+        /// </summary>
+        /// <param name="configKey">The key of the config to retrieve</param>
+        /// <typeparam name="T">the type of the config</typeparam>
         public Config<T> GetConfig<T>(string configKey)
         {
             var configFound = gameConfigDictionary.TryGetValue(configKey, out var config) ? config : null;
@@ -58,7 +67,11 @@ namespace Mayotech.UGSConfig
             {
                 RemoteConfigService.Instance.FetchCompleted += OnFetchCompleted;
                 var userAttributes = new userAttributes();
-                var appAttributes = new appAttributes();
+                var appAttributes = new appAttributes()
+                {
+                    appVersion = Application.version
+                };
+                
                 await RemoteConfigService.Instance.FetchConfigsAsync(userAttributes, appAttributes);
             }
             catch (Exception e)
@@ -69,26 +82,28 @@ namespace Mayotech.UGSConfig
 
         private void OnFetchCompleted(ConfigResponse response)
         {
-            var configs = response.body[CONFIGS];
-            var settings = configs?[SETTINGS];
-            if (settings == null) return;
-            fetchedConfigs = settings;
-            Debug.Log(JsonConvert.SerializeObject(fetchedConfigs));
-            onConfigFetched?.RaiseEvent(settings);
+            switch (response.status)
+            {
+                case ConfigRequestStatus.None:
+                    break;
+                case ConfigRequestStatus.Failed:
+                    break;
+                case ConfigRequestStatus.Success:
+                    var configs = response.body[CONFIGS];
+                    var settings = configs?[SETTINGS];
+                    if (settings == null) return;
+                    fetchedConfigs = settings;
+                    Debug.Log(JsonConvert.SerializeObject(fetchedConfigs));
+                    onConfigFetched?.RaiseEvent(settings);
+                    break;
+                case ConfigRequestStatus.Pending:
+                    break;
+            }
         }
 
         private void OnDestroy() => RemoteConfigService.Instance.FetchCompleted -= OnFetchCompleted;
 
-        public void AddConfig(Config config)
-        {
-            if (!gameConfigs.Contains(config))
-            {
-                gameConfigs.Add(config);
-                Debug.Log($"Config {config.name} added");
-            }
-            else
-                Debug.LogError($"Config {config.name} already added");
-        }
+#region Unity utility methods
 
         /// <summary>
         /// Adds the configs to the list (Editor only)
@@ -101,7 +116,7 @@ namespace Mayotech.UGSConfig
             foreach (var guid in guids)
             {
                 var config = AssetDatabase.LoadAssetAtPath<Config>(AssetDatabase.GUIDToAssetPath(guid));
-                AddConfigsToList(config);
+                AddConfigToList(config);
             }
 #endif
         }
@@ -109,7 +124,7 @@ namespace Mayotech.UGSConfig
         /// <summary>
         /// Adds the config to the list (Editor only)
         /// </summary>
-        private void AddConfigsToList(Config config)
+        public void AddConfigToList(Config config)
         {
             if (gameConfigs.Contains(config))
                 Debug.LogError($"Resource already added: {config.ConfigKey}");
@@ -119,12 +134,7 @@ namespace Mayotech.UGSConfig
                 Debug.Log($"Currency added {config.ConfigKey}");
             }
         }
-
-        public struct userAttributes { }
-
-        public struct appAttributes
-        {
-            public string appVersion;
-        }
+        
+#endregion
     }
 }
