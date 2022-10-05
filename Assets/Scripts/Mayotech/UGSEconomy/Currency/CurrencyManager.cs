@@ -18,7 +18,7 @@ namespace Mayotech.UGSEconomy.Currency
 
         [SerializeField] protected List<ScriptableCurrency> allCurrencies;
         protected Dictionary<string, ScriptableCurrency> currenciesDictionary = new();
-
+        
         public override void InitService()
         {
             currenciesDictionary.Clear();

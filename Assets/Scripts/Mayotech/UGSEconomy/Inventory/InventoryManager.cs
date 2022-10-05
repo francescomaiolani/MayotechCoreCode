@@ -59,7 +59,7 @@ namespace Mayotech.UGSEconomy.Inventory
         {
             var scriptableItem = GetScriptableItemOfType(inventoryItem.InventoryItemId);
             if (scriptableItem != null)
-                scriptableItem.AddInventoryItemInstance(inventoryItem);
+                scriptableItem.AssignItemInstance(inventoryItem);
             else
                 Debug.LogError($"ScriptableItem {scriptableItem.ItemId} not found");
         }
@@ -69,7 +69,7 @@ namespace Mayotech.UGSEconomy.Inventory
         /// <summary>
         /// Get all items definition from server and assign them to the sriptable object in client
         /// </summary>
-        public async UniTask GetInventoryItemsDefinitions()
+        public async UniTask GetRemoteItemsDefinitions()
         {
             try
             {
@@ -87,7 +87,7 @@ namespace Mayotech.UGSEconomy.Inventory
         /// Get a single item definition and assign it to the scriptable object of the client
         /// </summary>
         /// <param name="itemId"> id of the item to get the definition </param>
-        public async UniTask GetInventoryItemDefinition(string itemId)
+        public async UniTask GetRemoteItemDefinition(string itemId)
         {
             try
             {
@@ -104,13 +104,13 @@ namespace Mayotech.UGSEconomy.Inventory
         /// <summary>
         /// Get all instances of a player item type from server based on the local item definition
         /// </summary>
-        public async UniTask GetInventoryItemsOfType(string itemId)
+        public async UniTask GetRemoteItemOfType(string itemId)
         {
             var scriptableItem = GetScriptableItemOfType(itemId);
             var definition = scriptableItem?.ItemDefinition;
             if (definition == null)
             {
-                await GetInventoryItemDefinition(itemId);
+                await GetRemoteItemDefinition(itemId);
                 definition = GetLocalItemDefinition(itemId);
             }
 
@@ -123,14 +123,51 @@ namespace Mayotech.UGSEconomy.Inventory
             scriptableItem.InventoryItems = result.PlayersInventoryItems;
         }
 
+        public async UniTask GetRemoteItemsAndInstances(int itemsPerFetch = 20, List<string> inventoryitemIds = null, List<string> playersInventoryItemIds = null)
+        {
+            // Optional, defaults to 20
+            var options = new GetInventoryOptions
+            {
+                PlayersInventoryItemIds = playersInventoryItemIds,
+                InventoryItemIds = inventoryitemIds,
+                ItemsPerFetch = itemsPerFetch,
+            };
+
+            var inventoryResult = await EconomyInventory.GetInventoryAsync(options);
+            var items = inventoryResult.PlayersInventoryItems;
+            while (inventoryResult.HasNext)
+            {
+                inventoryResult = await inventoryResult.GetNextAsync(itemsPerFetch);
+                items = inventoryResult.PlayersInventoryItems;
+            }
+
+            var groupedItems = items.GroupBy(item => item.InventoryItemId)
+                .Select(x => x.Select(v => v).ToList())
+                .ToList();
+            foreach (var itemGroup in groupedItems)
+            {
+                var itemId = itemGroup.FirstOrDefault()?.InventoryItemId;
+                var scriptableObject = GetScriptableItemOfType(itemId);
+                if (scriptableObject != null)
+                    scriptableObject.InventoryItems = itemGroup;
+                else
+                    Debug.LogError($"ScriptableItem {itemId} not found");
+            }
+        }
+        
         /// <summary>
         /// Get all player inventory items and instances and assign them to the correct scriptable objects
         /// </summary>
         /// <param name="itemsPerFetch"> items to fetch per call </param>
-        public async UniTask GetPlayerInventory(int itemsPerFetch = 20)
+        public async UniTask GetRemoteInventory(int itemsPerFetch = 20, List<string> inventoryitemIds = null, List<string> playersInventoryItemIds = null)
         {
             // Optional, defaults to 20
-            var options = new GetInventoryOptions { ItemsPerFetch = itemsPerFetch };
+            var options = new GetInventoryOptions
+            {
+                PlayersInventoryItemIds = playersInventoryItemIds,
+                InventoryItemIds = inventoryitemIds,
+                ItemsPerFetch = itemsPerFetch,
+            };
 
             var inventoryResult = await EconomyInventory.GetInventoryAsync(options);
             var items = inventoryResult.PlayersInventoryItems;
@@ -157,7 +194,7 @@ namespace Mayotech.UGSEconomy.Inventory
         /// <summary>
         /// Adds a new item instance to the player inventory and assigns it back to the scriptableItem
         /// </summary>
-        private async UniTask AddItemToPlayersInventory(string itemId, string instanceId, Action onSuccess,
+        private async UniTask AddItemToRemoteInventory(string itemId, string instanceId, Action onSuccess,
             Action<Exception> onFail, Dictionary<string, object> instanceData)
         {
             try
@@ -193,7 +230,7 @@ namespace Mayotech.UGSEconomy.Inventory
         /// <summary>
         /// Updates the instance data of a player Item and assigns it back to the scriptable Item
         /// </summary>
-        private async UniTask UpdatePlayersItemInstanceData(string itemId, Dictionary<string, object> instanceData,
+        private async UniTask UpdateRemoteInstanceData(string itemId, Dictionary<string, object> instanceData,
             Action onSuccess, Action<Exception> onFail)
         {
             try
@@ -224,12 +261,12 @@ namespace Mayotech.UGSEconomy.Inventory
         public void OnPurchaseCompleted(MakeVirtualPurchaseResult result)
         {
             foreach (var itemPaid in result.Costs.Inventory)
-                UpdateLocalItemBalance(itemPaid.Id,itemPaid.Amount, itemPaid.PlayersInventoryItemIds, true);
+                UpdateLocalItemBalance(itemPaid.Id, itemPaid.PlayersInventoryItemIds, true);
             foreach (var itemObtained in result.Rewards.Inventory)
-                UpdateLocalItemBalance(itemObtained.Id,itemObtained.Amount, itemObtained.PlayersInventoryItemIds, false);
+                UpdateLocalItemBalance(itemObtained.Id, itemObtained.PlayersInventoryItemIds, false);
         }
 
-        private void UpdateLocalItemBalance(string itemId, int itemAmount, List<string> playersInventoryItemIds, bool remove)
+        private void UpdateLocalItemBalance(string itemId, List<string> playersInventoryItemIds, bool remove)
         {
             var item = GetScriptableItemOfType(itemId);
             if (item == null)
@@ -239,6 +276,8 @@ namespace Mayotech.UGSEconomy.Inventory
             }
             if (remove)
                 item.RemoveInventoryItemInstance(playersInventoryItemIds.ToArray());
+            else
+                item.AddInventoryItemInstance(itemId, playersInventoryItemIds.ToArray());
         }
 
         /// <summary>

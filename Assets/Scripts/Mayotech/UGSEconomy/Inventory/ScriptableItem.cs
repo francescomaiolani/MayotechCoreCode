@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mayotech.Resources;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using Unity.Services.Economy.Model;
 using UnityEditor;
 using UnityEngine;
@@ -42,15 +43,23 @@ namespace Mayotech.UGSEconomy.Inventory
         public PlayersInventoryItem GetItemInstance(string instanceId) =>
             InventoryItems.FirstOrDefault(item => item.PlayersInventoryItemId == instanceId);
 
-        public void AddInventoryItemInstance(PlayersInventoryItem itemInstance)
+        public void AssignItemInstance(PlayersInventoryItem inventoryItem)
         {
-            var index = InventoryItems.FindIndex(item =>
-                item.PlayersInventoryItemId == itemInstance.PlayersInventoryItemId);
-            if (index > -1)
-                InventoryItems[index] = itemInstance;
-            else
-                InventoryItems.Add(itemInstance);
-            onItemChanged?.RaiseEvent(new []{itemInstance});
+            if (InventoryItems.All(item => item.PlayersInventoryItemId != inventoryItem.PlayersInventoryItemId))
+                InventoryItems.Add(inventoryItem);
+        }
+
+        public void AddInventoryItemInstance(string itemId, params string[] itemInstancesId)
+        {
+            foreach (var instanceId in itemInstancesId)
+            {
+                if (InventoryItems.Any(item => item.PlayersInventoryItemId == instanceId))
+                    continue;
+                InventoryItems.Add(new PlayersInventoryItem(itemId, instanceId));
+            }
+
+            onItemChanged?.RaiseEvent(InventoryItems.FindAll(item =>
+                itemInstancesId.Contains(item.PlayersInventoryItemId)));
         }
 
         public void RemoveInventoryItemInstance(params string[] itemInstancesId)

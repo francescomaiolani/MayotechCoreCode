@@ -13,8 +13,8 @@ namespace Mayotech.AppLoading
             base.StartOperation();
             try
             {
-                await InventoryManager.GetInventoryItemsDefinitions();
-                await InventoryManager.GetPlayerInventory();  
+                await InventoryManager.GetRemoteItemsDefinitions();
+                await InventoryManager.GetRemoteInventory();  
                 Status = LoadingOperationStatus.Completed;
             }
             catch (Exception e)

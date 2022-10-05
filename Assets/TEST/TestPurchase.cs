@@ -48,4 +48,17 @@ public class TestPurchase : MonoBehaviour
             Debug.LogException(exception);
         });
     }
+    
+    [Button("Make Purchase 2", ButtonSizes.Large)]
+    public void MakePurchase2()
+    {
+        var purchase = purchasesData.GetVirtualPuchaseDefinition("TEST_PURCHASE_2");
+        storeManager.MakeVirtualPurchase(purchase.Id, () =>
+        {
+            Debug.Log("Purchase Success");
+        }, exception =>
+        {
+            Debug.LogException(exception);
+        });
+    }
 }

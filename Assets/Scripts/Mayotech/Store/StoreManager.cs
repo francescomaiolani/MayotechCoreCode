@@ -18,6 +18,9 @@ namespace Mayotech.Store
         private CurrencyManager CurrencyManager => ServiceLocator.Instance.CurrencyManager;
         private InventoryManager InventoryManager => ServiceLocator.Instance.InventoryManager;
 
+        private const string CURRENCY = "CURRENCY";
+        private const string ITEM = "INVENTORY_ITEM";
+
         [SerializeField, AutoConnect] protected PurchasesData purchasesData;
 
         public override void InitService() { }
@@ -76,9 +79,26 @@ namespace Mayotech.Store
             var options = new MakeVirtualPurchaseOptions { PlayersInventoryItemIds = inventoryItemsToPick };
             try
             {
+                var purchaseDefinition = purchasesData.GetVirtualPuchaseDefinition(purchaseID);
+                if (purchaseDefinition == null)
+                {
+                    onFail?.Invoke(new Exception($"Purchase definition {purchaseID} not found"));
+                    return;
+                }
+
+                var canAfford = CanAffordPurchase(purchaseDefinition);
+                if (!canAfford)
+                {
+                    onFail?.Invoke(new Exception($"Can't afford purchase {purchaseID} locally"));
+                    return;
+                }
                 var purchaseResult = await EconomyPurchase.MakeVirtualPurchaseAsync(purchaseID,
                     inventoryItemsToPick == null ? null : options);
                 CurrencyManager.OnPuchaseCompleted(purchaseResult);
+                if (purchaseResult.Costs.Inventory.Count > 0 || purchaseResult.Rewards.Inventory.Count > 0)
+                {
+                    
+                }
                 InventoryManager.OnPurchaseCompleted(purchaseResult);
                 onSuccess?.Invoke();
             }
@@ -92,6 +112,26 @@ namespace Mayotech.Store
                 Debug.LogException(e);
                 onFail?.Invoke(e);
             }
+        }
+
+        protected bool CanAffordPurchase(VirtualPurchaseDefinition virtualPurchaseDefinition)
+        {
+            return virtualPurchaseDefinition.Costs.All(cost =>
+            {
+                var itemQuantity = cost.Item.GetReferencedConfigurationItem();
+                var resourceType = itemQuantity.Type;
+                switch (resourceType)
+                {
+                    case CURRENCY:
+                        var currency = CurrencyManager.GetScriptableCurrency(itemQuantity.Id);
+                        return (currency?.Amount ?? 0) >= cost.Amount;
+                    case ITEM:
+                        var item = InventoryManager.GetScriptableItemOfType(itemQuantity.Id);
+                        return (item?.Amount ?? 0) >= cost.Amount;
+                    default:
+                        return false;
+                }
+            });
         }
 
         /// <summary>
