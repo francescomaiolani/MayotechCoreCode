@@ -25,9 +25,11 @@ namespace Mayotech.AppLoading
                 switch (status)
                 {
                     case LoadingOperationStatus.Completed:
+                        Debug.Log($"[Operation {name} Completed]");
                         onLoadingOperationCompleted?.RaiseEvent(this);
                         break;
                     case LoadingOperationStatus.Failed:
+                        Debug.Log($"[Operation {name} failed]");
                         onLoadingOperationFailed?.RaiseEvent(this);
                         break;
                 }

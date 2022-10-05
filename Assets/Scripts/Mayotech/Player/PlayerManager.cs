@@ -28,9 +28,6 @@ namespace Mayotech.Player
 
         protected void OnPlayerSignedIn()
         {
-            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
-            Debug.Log($"PlayerInfo: {JsonConvert.SerializeObject(AuthenticationService.Instance.PlayerInfo)}");
             playerId.Value = AuthenticationService.Instance.PlayerId;
             sessionToken.Value = AuthenticationService.Instance.AccessToken;
         }

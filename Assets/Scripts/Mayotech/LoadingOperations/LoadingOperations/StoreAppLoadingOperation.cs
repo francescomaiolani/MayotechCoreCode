@@ -1,20 +1,19 @@
 using System;
-using Mayotech.UGSEconomy.Inventory;
+using Mayotech.Store;
 using UnityEngine;
 
 namespace Mayotech.AppLoading
 {
-    public class InventoryAppLoadingOperation : AppLoadingOperation
+    public class StoreAppLoadingOperation : AppLoadingOperation
     {
-        private InventoryManager InventoryManager => ServiceLocator.Instance.InventoryManager;
+        protected StoreManager StoreManager => ServiceLocator.Instance.StoreManager;
         
         public override async void StartOperation()
         {
             base.StartOperation();
             try
             {
-                await InventoryManager.GetInventoryItemsDefinitions();
-                await InventoryManager.GetPlayerInventory();  
+                await StoreManager.InitPurchasables();
                 Status = LoadingOperationStatus.Completed;
             }
             catch (Exception e)

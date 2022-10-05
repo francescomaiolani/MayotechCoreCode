@@ -1,27 +1,27 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mayotech.AppLoading;
 using Mayotech.CloudCode;
-using Mayotech.SaveLoad;
 using UnityEngine;
 
-public class CloudCodeAppLoadingOperation : AppLoadingOperation
+namespace Mayotech.AppLoading
 {
-    private CloudCodeManager CloudCodeManager => ServiceLocator.Instance.CloudCodeManager;
-    
-    public override async void StartOperation()
+    public class CloudCodeAppLoadingOperation : AppLoadingOperation
     {
-        base.StartOperation();
-        try
+        private CloudCodeManager CloudCodeManager => ServiceLocator.Instance.CloudCodeManager;
+    
+        public override async void StartOperation()
         {
-            await CloudCodeManager.SendTestRequest();
-            Status = LoadingOperationStatus.Completed;
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-            Status = LoadingOperationStatus.Failed;
+            base.StartOperation();
+            try
+            {
+                await CloudCodeManager.SendTestRequest();
+                Status = LoadingOperationStatus.Completed;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Status = LoadingOperationStatus.Failed;
+            }
         }
     }
 }
+

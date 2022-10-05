@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59508ec046ff44be8f2ec9f7f3de503a, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  inventoryId: SWORD
+  itemId: SWORD
   onItemChanged: {fileID: 11400000, guid: 9f79591aec036470bb582519df7d5066, type: 2}

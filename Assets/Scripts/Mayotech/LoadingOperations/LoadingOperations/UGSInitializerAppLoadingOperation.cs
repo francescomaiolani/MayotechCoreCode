@@ -14,7 +14,6 @@ public class UGSInitializerAppLoadingOperation : AppLoadingOperation
         
         var initOptions = new InitializationOptions();
         initOptions.SetEnvironmentName(AuthenticationManager.CurrentEnvironment.EnvironmentName);
-        Debug.Log($"Start operation UGSInitializerAppLoadingOperation");
         await UnityServices.InitializeAsync(initOptions);
         Debug.Log($"UGS State: {UnityServices.State}");
         Status = UnityServices.State switch

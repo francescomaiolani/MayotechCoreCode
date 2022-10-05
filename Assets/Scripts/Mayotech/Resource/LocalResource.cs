@@ -11,9 +11,9 @@ namespace Mayotech.Resources
     {
         [SerializeField] protected string resourceType;
         [SerializeField, AutoConnect] protected OnResourceChangedEvent resourceChangedEvent;
-        [SerializeField] protected int amount;
+        [SerializeField] protected long amount;
         
-        public virtual int Amount
+        public virtual long Amount
         {
             get => amount;
             set

@@ -479,6 +479,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1709106696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1709106698}
+  - component: {fileID: 1709106697}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1709106697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709106696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8d90b33b47b4757b75afff1acceeb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currency: {fileID: 11400000, guid: 990d6133a1d974c64b0fced283e612fd, type: 2}
+  currencyManager: {fileID: 11400000, guid: 4898f7fe0fa0e484a975ae7ed70d4303, type: 2}
+  purchasesData: {fileID: 11400000, guid: 4b0c577a1716a43838b52c2c61fd0561, type: 2}
+  storeManager: {fileID: 11400000, guid: 29c3e2a2b9a314a6eb5fce033e513155, type: 2}
+--- !u!4 &1709106698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709106696}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.010027874, y: 0.020037612, z: 0.017581113}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2028770367
 GameObject:
   m_ObjectHideFlags: 0

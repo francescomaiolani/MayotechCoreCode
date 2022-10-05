@@ -1,23 +1,26 @@
 using System;
-using Mayotech.AppLoading;
 using UnityEngine;
 
-public class InitializeAnalyticsAppLoadingOperation : AppLoadingOperation
+namespace Mayotech.AppLoading
 {
-    protected AnalyticsManager AnalyticsManager => ServiceLocator.Instance.AnalyticsManager;
-    
-    public override async void StartOperation()
+    public class InitializeAnalyticsAppLoadingOperation : AppLoadingOperation
     {
-        base.StartOperation();
-        try
+        protected AnalyticsManager AnalyticsManager => ServiceLocator.Instance.AnalyticsManager;
+    
+        public override async void StartOperation()
         {
-            await AnalyticsManager.InitializeAnalyiticsConsent();
-            Status = LoadingOperationStatus.Completed;
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-            Status = LoadingOperationStatus.Failed;
+            base.StartOperation();
+            try
+            {
+                await AnalyticsManager.InitializeAnalyiticsConsent();
+                Status = LoadingOperationStatus.Completed;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Status = LoadingOperationStatus.Failed;
+            }
         }
     }
 }
+

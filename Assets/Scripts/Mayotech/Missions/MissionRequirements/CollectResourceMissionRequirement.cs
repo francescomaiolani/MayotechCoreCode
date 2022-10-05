@@ -11,9 +11,9 @@ namespace Mayotech.Missions
         [SerializeField] protected OnResourceChangedEvent listenedEvent;
 
         [SerializeField] protected LocalResource resource;
-        [SerializeField] protected int maxResourceToCollect;
+        [SerializeField] protected long maxResourceToCollect;
         
-        protected int resourceCollected;
+        protected long resourceCollected;
 
         public override void Init(Action<MissionRequirement> onRequirementSatisfied)
         {
@@ -24,7 +24,7 @@ namespace Mayotech.Missions
 
         private void OnDestroy() => listenedEvent.Unsubscribe(OnEventListened);
 
-        private void OnEventListened(LocalResource localResource, int delta)
+        private void OnEventListened(LocalResource localResource, long delta)
         {
             if (localResource != resource) return;
             if (delta <= 0) return;

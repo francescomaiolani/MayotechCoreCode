@@ -10,7 +10,7 @@ namespace Mayotech.Resources
         [SerializeField] protected OnResourceMaxCapEvent onResourceMaxCapEvent;
         [SerializeField] protected OnResourceMinCapEvent onResourceMinCapEvent;
 
-        public override int Amount
+        public override long Amount
         {
             get => amount;
             set

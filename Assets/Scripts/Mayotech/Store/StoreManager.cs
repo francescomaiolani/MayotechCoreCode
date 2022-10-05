@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Mayotech.UGSEconomy.Currency;
 using Mayotech.UGSEconomy.Inventory;
@@ -13,12 +14,53 @@ namespace Mayotech.Store
     public class StoreManager : Service
     {
         private IEconomyPurchasesApiClientApi EconomyPurchase => EconomyService.Instance.Purchases;
+        private IEconomyConfigurationApiClient EconomyConfig => EconomyService.Instance.Configuration;
         private CurrencyManager CurrencyManager => ServiceLocator.Instance.CurrencyManager;
         private InventoryManager InventoryManager => ServiceLocator.Instance.InventoryManager;
 
+        [SerializeField, AutoConnect] protected PurchasesData purchasesData;
+
         public override void InitService() { }
 
-        public void InitPurchasable() { }
+        public async UniTask InitPurchasables()
+        {
+            var vitualTask = GetVirtualPurchases();
+            var realMoneyTask = GetRealMoneyPurchases();
+            try
+            {
+                await UniTask.WhenAll(vitualTask, realMoneyTask);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private async UniTask GetVirtualPurchases()
+        {
+            try
+            {
+                var results = await EconomyConfig.GetVirtualPurchasesAsync();
+                purchasesData.VirtualPurchases = results.ToDictionary(item => item.Id, item => item);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private async UniTask GetRealMoneyPurchases()
+        {
+            try
+            {
+                var results = await EconomyConfig.GetRealMoneyPurchasesAsync();
+                purchasesData.RealMoneyPurchases = results.ToDictionary(item => item.Id, item => item);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         /// <summary>
         /// 
@@ -63,7 +105,8 @@ namespace Mayotech.Store
         /// <param name="currency">ISO-4217 code of the currency used in the purchase.</param>
         /// <param name="onSuccess"></param>
         /// <param name="onFail"></param>
-        public async UniTask RedeemAppleAppStorePurchase(string purchaseId, string receipt,int localCost, string currency, Action onSuccess, Action onFail)
+        public async UniTask RedeemAppleAppStorePurchase(string purchaseId, string receipt, int localCost,
+            string currency, Action onSuccess, Action onFail)
         {
             var args = new RedeemAppleAppStorePurchaseArgs(purchaseId, receipt, localCost, currency);
             try
@@ -83,8 +126,73 @@ namespace Mayotech.Store
                 onFail?.Invoke();
             }
         }
-        
-        protected void EvaluateAppStorePurchase(RedeemAppleAppStorePurchaseResult result, Action onSuccess, Action onFail,
+
+        /// <summary>
+        /// Redeems a real money purchase by submitting a receipt from the Google Play Store. This is validated and if
+        /// valid, the rewards as defined in the configuration are applied to the player’s inventory and currency balances.
+        /// </summary>
+        /// <param name="purchaseId">The configuration ID of the purchase to make.</param>
+        /// <param name="purchaseData">A JSON encoded string returned from a successful in app billing purchase.</param>
+        /// <param name="purchaseDataSignature">A signature of the PurchaseData returned from a successful in app
+        /// billing purchase.</param>
+        /// <param name="localCost">The cost of the purchase as an integer in the minor currency format, for example,
+        /// $1.99 USD would be 199.</param>
+        /// <param name="currency"> ISO-4217 code of the currency used in the purchase.</param>
+        /// <param name="onSuccess"></param>
+        /// <param name="onFail"></param>
+        public async UniTask RedeemGooglePlayPurchase(string purchaseId, string purchaseData,
+            string purchaseDataSignature, int localCost, string currency, Action onSuccess, Action onFail)
+        {
+            var args = new RedeemGooglePlayStorePurchaseArgs(purchaseId, purchaseData, purchaseDataSignature, localCost,
+                currency);
+
+            try
+            {
+                var purchaseResult = await EconomyPurchase.RedeemGooglePlayPurchaseAsync(args);
+                EvaluatePlayStorePurchase(purchaseResult, onSuccess, onFail, false);
+            }
+            catch (EconomyGooglePlayStorePurchaseFailedException exception)
+            {
+                Debug.LogException(exception);
+                EvaluatePlayStorePurchase(exception.Data, onSuccess, onFail, true);
+                onFail?.Invoke();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                onFail?.Invoke();
+            }
+        }
+
+        protected void EvaluatePlayStorePurchase(RedeemGooglePlayPurchaseResult result, Action onSuccess,
+            Action onFail,
+            bool fromException)
+        {
+            if (fromException)
+            {
+                onFail?.Invoke();
+                return;
+            }
+
+            switch (result.Verification.Status)
+            {
+                case GoogleVerification.StatusOptions.VALID:
+                case GoogleVerification.StatusOptions.VALIDNOTREDEEMED:
+                    onSuccess?.Invoke();
+                    break;
+                case GoogleVerification.StatusOptions.INVALIDALREADYREDEEMED:
+                case GoogleVerification.StatusOptions.INVALIDVERIFICATIONFAILED:
+                case GoogleVerification.StatusOptions.INVALIDANOTHERPLAYER:
+                case GoogleVerification.StatusOptions.INVALIDCONFIGURATION:
+                case GoogleVerification.StatusOptions.INVALIDPRODUCTIDMISMATCH:
+                default:
+                    onFail?.Invoke();
+                    break;
+            }
+        }
+
+        protected void EvaluateAppStorePurchase(RedeemAppleAppStorePurchaseResult result, Action onSuccess,
+            Action onFail,
             bool fromException)
         {
             if (fromException)

@@ -106,7 +106,6 @@ namespace Mayotech.SaveLoad
             {
                 var allData = await CloudSave.LoadAllAsync();
                 onLoadCompleted?.RaiseEvent(allData);
-                Debug.Log($"Player keys: {JsonConvert.SerializeObject(allData)}");
             }
             catch (CloudSaveException cloudSaveException)
             {

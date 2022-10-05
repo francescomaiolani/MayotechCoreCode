@@ -13,10 +13,8 @@ namespace Mayotech.AppLoading
             base.StartOperation();
             try
             {
-                Debug.Log($"Start operation SignInAppLoadingOperation");
                 await authenticationManager.SignIn();
                 Status = LoadingOperationStatus.Completed;
-                Debug.Log($"End operation SignInAppLoadingOperation");
             }
             catch (Exception e)
             {

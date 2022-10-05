@@ -15,12 +15,11 @@ namespace Mayotech.UGSEconomy.Currency
         [SerializeField, AutoConnect] private OnCurrencyBalanceChangedGameEvent onCurrencyChangedGameEvent;
 
         private CurrencyDefinition currencyDefinition;
-        private PlayerBalance currencyBalance;
+        [ShowInInspector] private PlayerBalance currencyBalance;
 
         public string CurrencyId => currencyId;
-        public string ResourceId => currencyBalance.CurrencyId;
         public long Amount => currencyBalance.Balance;
-
+        
         public CurrencyDefinition CurrencyDefinition
         {
             get => currencyDefinition;

@@ -27,10 +27,7 @@ namespace Mayotech.UGSConfig
         protected void OnConfigFetched(JToken token)
         {
             if (token[ConfigKey] != null)
-            {
-                Debug.Log($"OnConfig Fetched: key {ConfigKey}, data: {token}");
                 DeserializeData(token[ConfigKey]);
-            }
             else
                 Debug.LogError($"OnConfig Fetched ERROR: key {ConfigKey}, data: {token}, key not found");
         }

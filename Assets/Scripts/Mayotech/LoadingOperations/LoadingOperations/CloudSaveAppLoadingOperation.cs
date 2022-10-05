@@ -1,26 +1,27 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mayotech.AppLoading;
 using Mayotech.SaveLoad;
 using UnityEngine;
 
-public class CloudSaveAppLoadingOperation : AppLoadingOperation
+namespace Mayotech.AppLoading
 {
-    private SaveManager saveManager => ServiceLocator.Instance.SaveManager;
-    
-    public override async void StartOperation()
+    public class CloudSaveAppLoadingOperation : AppLoadingOperation
     {
-        base.StartOperation();
-        try
+        private SaveManager saveManager => ServiceLocator.Instance.SaveManager;
+    
+        public override async void StartOperation()
         {
-            await saveManager.LoadAllPlayerData();
-            Status = LoadingOperationStatus.Completed;
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-            Status = LoadingOperationStatus.Failed;
+            base.StartOperation();
+            try
+            {
+                await saveManager.LoadAllPlayerData();
+                Status = LoadingOperationStatus.Completed;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Status = LoadingOperationStatus.Failed;
+            }
         }
     }
 }
+

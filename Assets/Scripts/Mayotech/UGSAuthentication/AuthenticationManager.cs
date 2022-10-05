@@ -29,7 +29,6 @@ namespace Mayotech.UGSAuthentication
         public override void InitService()
         {
             authenticationMethod = (AuthenticationMethod)previousAuthenticationMethod.Value;
-            Debug.Log($"Authentication method: {authenticationMethod}");
         }
 
         private void OnDestroy() => UnsubscribeAuthenticationCallbacks();

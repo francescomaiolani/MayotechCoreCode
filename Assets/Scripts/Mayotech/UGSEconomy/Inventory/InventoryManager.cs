@@ -20,7 +20,7 @@ namespace Mayotech.UGSEconomy.Inventory
         protected Dictionary<string, ScriptableItem> itemsDictionary = new();
 
         public override void InitService() =>
-            itemsDictionary = allItems.ToDictionary(item => item.InventoryId, item => item);
+            itemsDictionary = allItems.ToDictionary(item => item.ItemId, item => item);
 
 #region Utility Methods
 
@@ -61,7 +61,7 @@ namespace Mayotech.UGSEconomy.Inventory
             if (scriptableItem != null)
                 scriptableItem.AddInventoryItemInstance(inventoryItem);
             else
-                Debug.LogError($"ScriptableItem {scriptableItem.InventoryId} not found");
+                Debug.LogError($"ScriptableItem {scriptableItem.ItemId} not found");
         }
 
 #endregion
@@ -234,7 +234,7 @@ namespace Mayotech.UGSEconomy.Inventory
             var item = GetScriptableItemOfType(itemId);
             if (item == null)
             {
-                Debug.LogError($"Item {item.InventoryId} not found");
+                Debug.LogError($"Item {item.ItemId} not found");
                 return;
             }
             if (remove)
@@ -247,11 +247,11 @@ namespace Mayotech.UGSEconomy.Inventory
         public void AddItemToList(ScriptableItem scriptableItem)
         {
             if (allItems.Contains(scriptableItem))
-                Debug.LogError($"Item: {scriptableItem.InventoryId} already added");
+                Debug.LogError($"Item: {scriptableItem.ItemId} already added");
             else
             {
                 allItems.Add(scriptableItem);
-                Debug.Log($"Item added {scriptableItem.InventoryId}");
+                Debug.Log($"Item added {scriptableItem.ItemId}");
             }
         }
         
