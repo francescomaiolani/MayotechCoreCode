@@ -5,6 +5,7 @@ using Mayotech.Missions;
 using Mayotech.Navigation;
 using Mayotech.Player;
 using Mayotech.Resources;
+using Mayotech.SafeTime;
 using Mayotech.SaveLoad;
 using Mayotech.Settings;
 using Mayotech.Store;
@@ -33,6 +34,7 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     [SerializeField, AutoConnect] protected ToastManager toastManager;
     [SerializeField, AutoConnect] protected CloudCodeManager cloudCodeManager;
     [SerializeField, AutoConnect] protected AnalyticsManager analyticsManager;
+    [SerializeField, AutoConnect] protected TimeManager timeManager;
 
     public NavigationManager NavigationManager => navigationManager;
     public MissionManager MissionManager => missionManager;
@@ -49,6 +51,7 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     public ToastManager ToastManager => toastManager;
     public CloudCodeManager CloudCodeManager => cloudCodeManager;
     public AnalyticsManager AnalyticsManager => analyticsManager;
+    public TimeManager TimeManager => timeManager;
 
     private void Start()
     {

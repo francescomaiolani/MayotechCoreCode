@@ -48,7 +48,7 @@ namespace Mayotech.Timer
         protected void Update()
         {
             if (!Ticking) return;
-            TimerCurrentValue -= Time.deltaTime;
+            TimerCurrentValue -= UnityEngine.Time.deltaTime;
         }
     }
 }
