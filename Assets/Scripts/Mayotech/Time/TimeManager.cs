@@ -48,6 +48,7 @@ namespace Mayotech.SafeTime
             }
             catch (Exception ex)
             {
+                //If it fails backup on a cloud code call
                 throw ex;
             }
         }

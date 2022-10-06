@@ -11,6 +11,10 @@ namespace Mayotech.SafeTime
         public DateTime UtcNow { get; set; }
         protected Stopwatch serverTimeStopwatch = new(); 
         
+        [PropertySpace(20)]
+        [InfoBox("Current Date UTC")]
+        [LabelText("@CurrentUtcTime")]
+        [ShowInInspector]
         public DateTime CurrentUtcTime => UtcNow + serverTimeStopwatch.Elapsed;
         
         public void SetServerTime(DateTime serverDateTime)
