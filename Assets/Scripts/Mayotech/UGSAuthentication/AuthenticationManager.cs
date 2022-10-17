@@ -14,28 +14,30 @@ namespace Mayotech.UGSAuthentication
     {
         [SerializeField] protected GameEvent onPlayerSignedIn;
         [SerializeField] protected PersistentInt previousAuthenticationMethod;
-        [SerializeField,AutoConnect] protected GuestUserAuthentication guestUserAuthentication;
-        [SerializeField,AutoConnect] protected FacebookUserAuthentication facebookUserAuthentication;
-        [SerializeField,AutoConnect] protected GoogleUserAuthentication googleUserAuthentication;
-        [SerializeField,AutoConnect] protected GooglePlayGamesUserAuthentication googlePlayGamesUserAuthentication;
-        [SerializeField,AutoConnect] protected AppleUserAuthentication appleUserAuthentication;
-        [SerializeField,AutoConnect] protected List<Environment> environments;
+        [SerializeField, AutoConnect] protected GuestUserAuthentication guestUserAuthentication;
+        [SerializeField, AutoConnect] protected FacebookUserAuthentication facebookUserAuthentication;
+        [SerializeField, AutoConnect] protected GoogleUserAuthentication googleUserAuthentication;
+        [SerializeField, AutoConnect] protected GooglePlayGamesUserAuthentication googlePlayGamesUserAuthentication;
+        [SerializeField, AutoConnect] protected AppleUserAuthentication appleUserAuthentication;
+        [SerializeField, AutoConnect] protected List<Environment> environments;
         [SerializeField] protected Environment currentEnvironment;
 
-        public Environment CurrentEnvironment => currentEnvironment ?? environments.FirstOrDefault(item =>item.IsDefault);
+        public Environment CurrentEnvironment => currentEnvironment
+            ? currentEnvironment
+            : environments.FirstOrDefault(item => item.IsDefault);
 
-        protected AuthenticationMethod authenticationMethod;
+        public AuthenticationMethod AuthenticationMethod => (AuthenticationMethod)previousAuthenticationMethod.Value;
 
         public override void InitService()
         {
-            authenticationMethod = (AuthenticationMethod)previousAuthenticationMethod.Value;
+            //AuthenticationMethod = (AuthenticationMethod)previousAuthenticationMethod.Value;
         }
 
         private void OnDestroy() => UnsubscribeAuthenticationCallbacks();
 
         public async UniTask SignIn()
         {
-            switch (authenticationMethod)
+            switch (AuthenticationMethod)
             {
                 case AuthenticationMethod.Facebook:
                     await SignInWithFacebook();
@@ -94,7 +96,7 @@ namespace Mayotech.UGSAuthentication
             AuthenticationService.Instance.SignedOut += OnPlayerSignedOut;
             AuthenticationService.Instance.Expired += OnPlayerSessionExpired;
         }
-    
+
         private void UnsubscribeAuthenticationCallbacks()
         {
             AuthenticationService.Instance.SignedIn -= OnPlayerSignedIn;
@@ -129,7 +131,7 @@ namespace Mayotech.UGSAuthentication
         {
             currentEnvironment = environments.FirstOrDefault(item => item.name == "production");
         }
-        
+
         [Button("Dev", ButtonSizes.Large)]
         public void SetDevEnvironment()
         {

@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
@@ -17,4 +18,7 @@ public class ScriptableVariable<T> : ScriptableVariable
     }
 
     public T DefaultValue => defaultValue;
+
+    [Button("Set Value", ButtonSizes.Medium, ButtonStyle.FoldoutButton)]
+    public void SetValue(T val) => Value = val;
 }

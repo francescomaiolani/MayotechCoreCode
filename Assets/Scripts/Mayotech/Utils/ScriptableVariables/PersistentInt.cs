@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PersistentInt", menuName = "ScriptableVariable/PersistentInt")]
 public class PersistentInt : ScriptableVariable<int>
 {
     [SerializeField] protected string key;
-    
+
     public override int Value
     {
         get
