@@ -8,6 +8,7 @@ using Mayotech.Resources;
 using Mayotech.SafeTime;
 using Mayotech.SaveLoad;
 using Mayotech.Settings;
+using Mayotech.SFX;
 using Mayotech.Store;
 using Mayotech.Toast;
 using Mayotech.UGSAuthentication;
@@ -20,8 +21,7 @@ using UnityEngine;
 public class ServiceLocator : SingletonPersistent<ServiceLocator>
 {
     [SerializeField] protected MainCamera mainCamera;
-    [Header("Services")]
-    [SerializeField, AutoConnect] protected NavigationManager navigationManager;
+    [Header("Services")] [SerializeField, AutoConnect] protected NavigationManager navigationManager;
     [SerializeField, AutoConnect] protected MissionManager missionManager;
     [SerializeField, AutoConnect] protected ResourceManager resourceManager;
     [SerializeField, AutoConnect] protected PlayerManager playerManager;
@@ -36,10 +36,11 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     [SerializeField, AutoConnect] protected CloudCodeManager cloudCodeManager;
     [SerializeField, AutoConnect] protected AnalyticsManager analyticsManager;
     [SerializeField, AutoConnect] protected TimeManager timeManager;
-    
+    [SerializeField, AutoConnect] protected SFXManager sfxManager;
+
     public NavigationManager NavigationManager => navigationManager;
     public MissionManager MissionManager => missionManager;
-    public ResourceManager ResourceManager => resourceManager;
+    public IResourceManager ResourceManager => resourceManager;
     public PlayerManager PlayerManager => playerManager;
     public AuthenticationManager AuthenticationManager => authenticationManager;
     public SaveManager SaveManager => saveManager;
@@ -53,16 +54,16 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
     public CloudCodeManager CloudCodeManager => cloudCodeManager;
     public AnalyticsManager AnalyticsManager => analyticsManager;
     public TimeManager TimeManager => timeManager;
+    public SFXManager SfxManager => sfxManager;
 
-    [Header("Unity Events")]
-    [SerializeField] protected GameEvent<bool> onApplicationPause;
+    [Header("Unity Events")] [SerializeField] protected GameEvent<bool> onApplicationPause;
     [SerializeField] protected GameEvent onApplicationQuit;
 
 
     private void Start()
     {
         var type = typeof(ServiceLocator);
-        var fields = type.GetFields( BindingFlags.NonPublic | BindingFlags.Instance);
+        var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
         foreach (var field in fields)
         {
             var fieldType = field.GetValue(this);

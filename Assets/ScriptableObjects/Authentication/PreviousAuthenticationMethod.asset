@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded5fc4c1861141769c7a215f003f9ed, type: 3}
   m_Name: PreviousAuthenticationMethod
   m_EditorClassIdentifier: 
-  value: 4
+  value: 1
   defaultValue: 0
   key: previousAuthenticationMethod

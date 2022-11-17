@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Mayotech.UGSEconomy.Inventory
 {
     [CreateAssetMenu(fileName = "InventoryManager", menuName = "Manager/InventoryManager")]
-    public sealed class InventoryManager : Service
+    public class InventoryManager : Service
     {
         protected IEconomyConfigurationApiClient EconomyClient => EconomyService.Instance.Configuration;
         protected IEconomyPlayerInventoryApiClient EconomyInventory => EconomyService.Instance.PlayerInventory;
@@ -123,7 +123,8 @@ namespace Mayotech.UGSEconomy.Inventory
             scriptableItem.InventoryItems = result.PlayersInventoryItems;
         }
 
-        public async UniTask GetRemoteItemsAndInstances(int itemsPerFetch = 20, List<string> inventoryitemIds = null, List<string> playersInventoryItemIds = null)
+        public async UniTask GetRemoteItemsAndInstances(int itemsPerFetch = 20, List<string> inventoryitemIds = null,
+            List<string> playersInventoryItemIds = null)
         {
             // Optional, defaults to 20
             var options = new GetInventoryOptions
@@ -154,12 +155,13 @@ namespace Mayotech.UGSEconomy.Inventory
                     Debug.LogError($"ScriptableItem {itemId} not found");
             }
         }
-        
+
         /// <summary>
         /// Get all player inventory items and instances and assign them to the correct scriptable objects
         /// </summary>
         /// <param name="itemsPerFetch"> items to fetch per call </param>
-        public async UniTask GetRemoteInventory(int itemsPerFetch = 20, List<string> inventoryitemIds = null, List<string> playersInventoryItemIds = null)
+        public async UniTask GetRemoteInventory(int itemsPerFetch = 20, List<string> inventoryitemIds = null,
+            List<string> playersInventoryItemIds = null)
         {
             // Optional, defaults to 20
             var options = new GetInventoryOptions
@@ -257,7 +259,7 @@ namespace Mayotech.UGSEconomy.Inventory
                 onFail?.Invoke(e);
             }
         }
-        
+
         public void OnPurchaseCompleted(MakeVirtualPurchaseResult result)
         {
             foreach (var itemPaid in result.Costs.Inventory)
@@ -274,6 +276,7 @@ namespace Mayotech.UGSEconomy.Inventory
                 Debug.LogError($"Item {item.ItemId} not found");
                 return;
             }
+
             if (remove)
                 item.RemoveInventoryItemInstance(playersInventoryItemIds.ToArray());
             else
@@ -293,11 +296,11 @@ namespace Mayotech.UGSEconomy.Inventory
                 Debug.Log($"Item added {scriptableItem.ItemId}");
             }
         }
-        
+
         /// <summary>
         /// Adds the currency to the list (Editor only)
         /// </summary>
-        [Button("Add all project items", ButtonSizes.Large),GUIColor(0.3f, 0.8f, 0.8f, 1f)]
+        [Button("Add all project items", ButtonSizes.Large), GUIColor(0.3f, 0.8f, 0.8f, 1f)]
         public void AddAllProjectCurrenciesToList()
         {
 #if UNITY_EDITOR

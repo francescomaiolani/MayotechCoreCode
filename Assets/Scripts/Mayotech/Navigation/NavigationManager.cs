@@ -3,34 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Mayotech.Navigation
 {
-    [CreateAssetMenu(menuName = "Manager/NavigationManager")]
-    public class NavigationManager : Service
+    public interface INavigationManager
     {
-        [SerializeField] private int navigationRequestLimit = 2;
-        [SerializeField] public List<SceneData> preloadScenes;
-        [SerializeField] public List<SceneData> allScenes;
-        [SerializeField, AutoConnect] private OnSceneLoadedGameEvent onSceneLoadedGameEvent;
-        [SerializeField, AutoConnect] private OnNavigationStartedGameEvent onNavigationStarted;
-        [SerializeField, AutoConnect] private OnNavigationEndedGameEvent onNavigationEnded;
+        UniTask PreloadScenes();
+        void EnqueueNavigation(NavigationRequest request);
+    }
 
-        private Dictionary<string, SceneData> allScenesDictionary = new();
+    [CreateAssetMenu(menuName = "Manager/NavigationManager")]
+    public class NavigationManager : Service, INavigationManager
+    {
+        [SerializeField] protected int navigationRequestLimit = 2;
+        [TableList] [SerializeField] protected List<SceneData> preloadScenes;
+        [TableList] [SerializeField] protected List<SceneData> allScenes;
+        [SerializeField, AutoConnect] protected OnSceneLoadedGameEvent onSceneLoadedGameEvent;
+        [SerializeField, AutoConnect] protected OnNavigationStartedGameEvent onNavigationStarted;
+        [SerializeField, AutoConnect] protected OnNavigationEndedGameEvent onNavigationEnded;
 
-        private Queue<NavigationRequest> navigationRequestsQueue = new();
-        private Stack<string> scenesStack = new();
+        protected Dictionary<string, SceneData> allScenesDictionary = new();
 
-        private Scene CurrentScene => SceneManager.GetActiveScene();
+        protected Queue<NavigationRequest> navigationRequestsQueue = new();
+        protected Stack<string> scenesStack = new();
 
-        private SceneData GetSceneConfig(string sceneName) =>
+        protected Scene CurrentScene => SceneManager.GetActiveScene();
+
+        protected SceneData GetSceneConfig(string sceneName) =>
             allScenesDictionary.TryGetValue(sceneName, out var sceneConfig) ? sceneConfig : null;
-        
+
         public override void InitService()
         {
-            foreach (var sceneConfig in allScenes) 
+            foreach (var sceneConfig in allScenes)
                 allScenesDictionary.TryAdd(sceneConfig.SceneName, sceneConfig);
         }
 
@@ -50,7 +57,7 @@ namespace Mayotech.Navigation
             CheckNavigation();
         }
 
-        public NavigationRequest PeekNavigationRequest()
+        protected NavigationRequest PeekNavigationRequest()
         {
             var firstRequest = navigationRequestsQueue.Peek();
             if (firstRequest == null) return null;
@@ -59,14 +66,14 @@ namespace Mayotech.Navigation
             return firstRequest;
         }
 
-        private void CheckNavigation()
+        protected void CheckNavigation()
         {
             var request = PeekNavigationRequest();
             if (request == null) return;
             Navigate(request);
         }
 
-        private async void Navigate(NavigationRequest request)
+        protected async void Navigate(NavigationRequest request)
         {
             try
             {
@@ -86,7 +93,7 @@ namespace Mayotech.Navigation
             }
         }
 
-        private async UniTask ForwardNavigation(ForwardNavigationRequest forwardNavigationRequest)
+        protected async UniTask ForwardNavigation(ForwardNavigationRequest forwardNavigationRequest)
         {
             var nextSceneName = forwardNavigationRequest.NextScene;
             if (nextSceneName == CurrentScene.name)
@@ -115,12 +122,12 @@ namespace Mayotech.Navigation
             onNavigationEnded?.RaiseEvent(currentSceneName, nextSceneName);
         }
 
-        private void UnloadPreviousScene(SceneData currentSceneData)
+        protected void UnloadPreviousScene(SceneData currentSceneData)
         {
             SceneManager.UnloadSceneAsync(currentSceneData.SceneName);
         }
 
-        private async UniTask ForwardNavigationFlow(Scene currentScene, string nextSceneName)
+        protected async UniTask ForwardNavigationFlow(Scene currentScene, string nextSceneName)
         {
             var nextScene = SceneManager.GetSceneByName(nextSceneName);
             var loadingOperation = UniTask.CompletedTask;
@@ -144,7 +151,7 @@ namespace Mayotech.Navigation
             await nextSceneController.NavigateHere();
         }
 
-        private async UniTask BackwardNavigation(BackwardNavigationRequest backwardNavigationRequest)
+        protected async UniTask BackwardNavigation(BackwardNavigationRequest backwardNavigationRequest)
         {
             var currentSceneConfig = GetSceneConfig(CurrentScene.name);
             if (currentSceneConfig == null)
@@ -165,7 +172,7 @@ namespace Mayotech.Navigation
             }
         }
 
-        private void ActivateScene(string sceneName, bool activate)
+        protected void ActivateScene(string sceneName, bool activate)
         {
             var rootObjects = SceneManager.GetSceneByName(sceneName).GetRootGameObjects();
             foreach (var root in rootObjects)
@@ -184,7 +191,7 @@ namespace Mayotech.Navigation
             else
                 Debug.LogError($"Scene {scene.SceneName} already added!");
         }
-        
+
         public void AddPreloadScene(SceneData scene)
         {
             if (!preloadScenes.Contains(scene))

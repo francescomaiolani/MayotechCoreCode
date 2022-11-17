@@ -28,6 +28,8 @@ namespace Mayotech.UGSAuthentication
 
         public AuthenticationMethod AuthenticationMethod => (AuthenticationMethod)previousAuthenticationMethod.Value;
 
+        protected UserAuthenticationMethod CurrentAuthenticationMethod { get; set; }
+
         public override void InitService()
         {
             //AuthenticationMethod = (AuthenticationMethod)previousAuthenticationMethod.Value;
@@ -59,33 +61,53 @@ namespace Mayotech.UGSAuthentication
             }
         }
 
+        public void Logout()
+        {
+            CurrentAuthenticationMethod?.SignOut();
+        }
+
         private UniTask SignInAnonymously()
         {
             SubscribeAuthenticationCallbacks();
+            CurrentAuthenticationMethod = guestUserAuthentication;
             return guestUserAuthentication.SignIn();
         }
 
         private UniTask SignInWithFacebook()
         {
             SubscribeAuthenticationCallbacks();
+            CurrentAuthenticationMethod = facebookUserAuthentication;
             return facebookUserAuthentication.SignIn();
         }
 
         private UniTask SignInWithGoogle()
         {
             SubscribeAuthenticationCallbacks();
+#if !UNITY_EDITOR
+            CurrentAuthenticationMethod = googleUserAuthentication;
             return googleUserAuthentication.SignIn();
+#elif UNITY_EDITOR
+            CurrentAuthenticationMethod = guestUserAuthentication;
+            return guestUserAuthentication.SignIn();
+#endif
         }
 
         private UniTask SignInWithGooglePlayGames()
         {
             SubscribeAuthenticationCallbacks();
+#if !UNITY_EDITOR
+            CurrentAuthenticationMethod = googlePlayGamesUserAuthentication;
             return googlePlayGamesUserAuthentication.SignIn();
+#elif UNITY_EDITOR
+            CurrentAuthenticationMethod = guestUserAuthentication;
+            return guestUserAuthentication.SignIn();
+#endif
         }
 
         private UniTask SignInWithApple()
         {
             SubscribeAuthenticationCallbacks();
+            CurrentAuthenticationMethod = appleUserAuthentication;
             return appleUserAuthentication.SignIn();
         }
 

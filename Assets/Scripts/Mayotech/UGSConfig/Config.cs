@@ -7,16 +7,19 @@ using UnityEngine;
 
 namespace Mayotech.UGSConfig
 {
+    public class ConfigAttribute : Attribute { }
+
     /// <summary>
     /// a Config is a SO that represent locally a RemoteConfig of UGS.
     /// It gets automatically populated with the data coming from Fetch of the the ConfigManager and logs an error if
     /// it doesn't found the corresponding config among the ones fetched. 
     /// </summary>
     [Serializable]
+    [ConfigAttribute]
     public abstract class Config : ScriptableObject
     {
-        [SerializeField, AutoConnect] protected OnConfigFetchedGameEvent onConfigFetched;
-        [SerializeField] protected string configKey;
+        [SerializeField, AutoConnect, HideInInspector] protected OnConfigFetchedGameEvent onConfigFetched;
+        [TableColumnWidth(200, resizable: false)] [SerializeField] protected string configKey;
 
         public string ConfigKey => configKey;
 
@@ -38,24 +41,26 @@ namespace Mayotech.UGSConfig
         /// <param name="data"></param>
         protected abstract void DeserializeData(JToken data);
 
-        [Button("Add to Config Manager", ButtonSizes.Large)]
+        [TableColumnWidth(50, resizable: false)]
+        [LabelText("Action")]
+        [Button("+", ButtonSizes.Large)]
         public void AddToConfigManager()
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             var guids = AssetDatabase.FindAssets("t: ConfigManager");
             foreach (var guid in guids)
             {
                 var configManager = AssetDatabase.LoadAssetAtPath<ConfigManager>(AssetDatabase.GUIDToAssetPath(guid));
                 configManager.AddConfigToList(this);
             }
-            #endif
+#endif
         }
     }
-    
+
     [Serializable]
     public abstract class Config<T> : Config, IConfig<T>
     {
-        [SerializeField] protected T data;
+        [HideLabel] [FoldoutGroup("Data", true)] [SerializeField] protected T data;
 
         public virtual T Data
         {

@@ -7,12 +7,12 @@ namespace Mayotech.Missions
     [CreateAssetMenu(menuName = "Mission/MissionRequirement/CollectResourceMissionRequirement")]
     public class CollectResourceMissionRequirement : MissionRequirement
     {
-        protected ResourceManager ResourceManager => ServiceLocator.Instance.ResourceManager;
+        protected IResourceManager ResourceManager => ServiceLocator.Instance.ResourceManager;
         [SerializeField] protected OnResourceChangedEvent listenedEvent;
 
         [SerializeField] protected LocalResource resource;
         [SerializeField] protected long maxResourceToCollect;
-        
+
         protected long resourceCollected;
 
         public override void Init(Action<MissionRequirement> onRequirementSatisfied)
@@ -31,7 +31,7 @@ namespace Mayotech.Missions
             resourceCollected += delta;
             CheckRequirement();
         }
-        
+
         public override void CheckRequirement()
         {
             if (resourceCollected < maxResourceToCollect) return;

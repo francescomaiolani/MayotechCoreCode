@@ -11,14 +11,14 @@ using UnityEngine;
 namespace Mayotech.UGSEconomy.Currency
 {
     [CreateAssetMenu(fileName = "CurrencyManager", menuName = "Manager/CurrencyManager")]
-    public sealed class CurrencyManager : Service
+    public class CurrencyManager : Service
     {
         protected IEconomyConfigurationApiClient EconomyClient => EconomyService.Instance.Configuration;
         protected IEconomyPlayerBalancesApiClient EconomyBalances => EconomyService.Instance.PlayerBalances;
 
         [SerializeField] protected List<ScriptableCurrency> allCurrencies;
         protected Dictionary<string, ScriptableCurrency> currenciesDictionary = new();
-        
+
         public override void InitService()
         {
             currenciesDictionary.Clear();

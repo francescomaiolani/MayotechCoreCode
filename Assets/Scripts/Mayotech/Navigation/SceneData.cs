@@ -18,6 +18,15 @@ namespace Mayotech.Navigation
         public bool KeepLoaded => keepLoaded;
         public bool SaveInSceneHistory => saveInSceneHistory;
 
+        public SceneData Fill(string sceneName, SceneType sceneType, bool keepLoaded, bool saveInSceneHistory)
+        {
+            this.sceneName = sceneName;
+            this.sceneType = sceneType;
+            this.keepLoaded = keepLoaded;
+            this.saveInSceneHistory = saveInSceneHistory;
+            return this;
+        }
+
         private void OnValidate()
         {
             if (keepLoaded && !saveInSceneHistory)

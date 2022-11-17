@@ -785,6 +785,7 @@ MonoBehaviour:
   cloudCodeManager: {fileID: 11400000, guid: d9d0a9597f62f4b9ba115a101b189f35, type: 2}
   analyticsManager: {fileID: 11400000, guid: 12c2bc41c8fad431cbbc69e083ddfe1d, type: 2}
   timeManager: {fileID: 11400000, guid: f9eab254435e54119a1405129a33e4fc, type: 2}
+  sfxManager: {fileID: 11400000, guid: 77dd59a469bc745008a805311b457ab2, type: 2}
   onApplicationPause: {fileID: 11400000, guid: 686b8aaba3ceb4ade9d35a303474fc1f, type: 2}
   onApplicationQuit: {fileID: 11400000, guid: c49327279492349d888c95e8e520a511, type: 2}
 --- !u!4 &931459299
@@ -1939,6 +1940,7 @@ GameObject:
   - component: {fileID: 2042086980}
   - component: {fileID: 2042086979}
   - component: {fileID: 2042086978}
+  - component: {fileID: 2042086981}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1995,6 +1997,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2042086981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042086977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8aee051ffd54bc2b79c9f965c82a79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2091400000
 GameObject:
   m_ObjectHideFlags: 0

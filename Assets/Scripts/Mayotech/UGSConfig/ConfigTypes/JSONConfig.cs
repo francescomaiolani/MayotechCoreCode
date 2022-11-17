@@ -12,5 +12,6 @@ namespace Mayotech.UGSConfig
         }
     }
 
-    public class ConfigData{ }
+    [Serializable]
+    public class ConfigData { }
 }

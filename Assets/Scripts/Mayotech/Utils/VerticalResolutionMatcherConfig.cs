@@ -7,10 +7,15 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class VerticalResolutionMatcherConfig : MonoBehaviour
 {
-    [SerializeField] private CanvasScaler _canvasScaler;
-    private CanvasScaler CanvasScaler => _canvasScaler ? _canvasScaler : GetComponent<CanvasScaler>();
+    [SerializeField] private CanvasScaler canvasScaler;
 
-    [SerializeField] private SceneResolutionData sceneResolutionData;
+    public CanvasScaler CanvasScaler
+    {
+        get => canvasScaler ? canvasScaler : GetComponent<CanvasScaler>();
+        set => canvasScaler = value;
+    }
+
+    [SerializeField, AutoConnect] private SceneResolutionData sceneResolutionData;
 
     //solo in editor!! non usare
     private int previousScreenWidth, previousScreenHeight;
@@ -44,7 +49,7 @@ public class VerticalResolutionMatcherConfig : MonoBehaviour
         var screenSize = Application.isEditor
             ? new Resolution { width = Screen.width, height = Screen.height }
             : Screen.currentResolution;
-        
+
         var currentRatio = (float)screenSize.width / (float)screenSize.height;
         var aspectRatioDistance = Mathf.Abs(currentResolution.AspectRatio - currentRatio);
         var distance = aspectRatioDistance;

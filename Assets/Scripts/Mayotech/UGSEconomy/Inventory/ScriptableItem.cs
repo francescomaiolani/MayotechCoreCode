@@ -18,7 +18,7 @@ namespace Mayotech.UGSEconomy.Inventory
         [SerializeField, AutoConnect] protected OnItemChangedGameEvent onItemChanged;
 
         protected InventoryItemDefinition itemDefinition;
-        [ShowInInspector] protected List<PlayersInventoryItem> inventoryItems = new();
+        [TableList] [ShowInInspector] protected List<PlayersInventoryItem> inventoryItems = new();
 
         public string ItemId => itemId;
 

@@ -10,11 +10,36 @@ namespace Mayotech.UGSAuthentication
     {
         protected abstract UniTask SpecificSignIn();
 
+        protected virtual void SpecificSignOut()
+        {
+            AuthenticationService.Instance.SignOut(true);
+        }
+
         public virtual async UniTask SignIn()
         {
             try
             {
                 await SpecificSignIn();
+            }
+            catch (AuthenticationException ex)
+            {
+                HandleAuthenticationException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                HandleAuthenticationException(ex);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        public virtual void SignOut()
+        {
+            try
+            {
+                SpecificSignOut();
             }
             catch (AuthenticationException ex)
             {

@@ -71,7 +71,7 @@ namespace Mayotech.UGSConfig
                 {
                     appVersion = Application.version
                 };
-                
+
                 await RemoteConfigService.Instance.FetchConfigsAsync(userAttributes, appAttributes);
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace Mayotech.UGSConfig
                 Debug.Log($"Currency added {config.ConfigKey}");
             }
         }
-        
+
 #endregion
     }
 }
