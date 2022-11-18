@@ -16,13 +16,18 @@ namespace Mayotech.UGSEconomy.Currency
         protected IEconomyConfigurationApiClient EconomyClient => EconomyService.Instance.Configuration;
         protected IEconomyPlayerBalancesApiClient EconomyBalances => EconomyService.Instance.PlayerBalances;
 
-        [SerializeField] protected List<ScriptableCurrency> allCurrencies;
+        [SerializeField] [TableList] protected List<ScriptableCurrency> allCurrencies;
         protected Dictionary<string, ScriptableCurrency> currenciesDictionary = new();
 
         public override void InitService()
         {
             currenciesDictionary.Clear();
             currenciesDictionary = allCurrencies.ToDictionary(item => item.CurrencyId, item => item);
+        }
+
+        public override bool CheckServiceIntegrity()
+        {
+            return allCurrencies.All(item => item != null);
         }
 
 #region Utility Methods

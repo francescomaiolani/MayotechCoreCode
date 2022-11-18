@@ -12,8 +12,7 @@ namespace Mayotech.Player
     {
         [SerializeField] protected GameEvent onPlayerSignedIn;
 
-        [Header("Fields")]
-        [SerializeField] protected StringVariable playerId;
+        [Header("Fields")] [SerializeField] protected StringVariable playerId;
         [SerializeField] protected StringVariable sessionToken;
 
         public string PlayerId => playerId.Value;
@@ -22,6 +21,11 @@ namespace Mayotech.Player
         public override void InitService()
         {
             onPlayerSignedIn.Subscribe(OnPlayerSignedIn);
+        }
+
+        public override bool CheckServiceIntegrity()
+        {
+            return onPlayerSignedIn != null && playerId != null && sessionToken != null;
         }
 
         protected void OnDestroy() => onPlayerSignedIn.Unsubscribe(OnPlayerSignedIn);

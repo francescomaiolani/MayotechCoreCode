@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Mayotech.Navigation;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Mayotech.AppLoading
@@ -11,7 +12,7 @@ namespace Mayotech.AppLoading
     public class AppInitializer : MonoBehaviour
     {
         private NavigationManager NavigationManager => ServiceLocator.Instance.NavigationManager;
-       
+
         [SerializeField, AutoConnect] private OnAppLoadingCompletedGameEvent onAppLoadingCompleted;
         [SerializeField] private List<AppLoadingOperation> appLoadingOperations;
 

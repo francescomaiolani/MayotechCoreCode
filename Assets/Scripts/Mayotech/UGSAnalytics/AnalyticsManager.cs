@@ -13,6 +13,8 @@ public class AnalyticsManager : Service
 
     public override void InitService() { }
 
+    public override bool CheckServiceIntegrity() => true;
+
     public async UniTask InitializeAnalyiticsConsent()
     {
         try
@@ -38,7 +40,7 @@ public class AnalyticsManager : Service
             }
         }
     }
-    
+
     public void SendEvent()
     {
         //IAnalyticsService.

@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onConfigFetched: {fileID: 11400000, guid: f071cda122b654e0fb6dd3ddeee37dff, type: 2}
   configKey: playerData
-  data: 
-  onConfigLoaded: {fileID: 11400000, guid: caec2803d438b4b4ba4b16621ef3645d, type: 2}
-  deserializedData:
-    playerID: 
-    sessionToken: 
+  data:
+    playerID: AAAAA99999
+    sessionToken: BBBBB

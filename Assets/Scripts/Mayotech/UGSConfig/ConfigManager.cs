@@ -61,6 +61,11 @@ namespace Mayotech.UGSConfig
             gameConfigs.ForEach(item => item.Init());
         }
 
+        public override bool CheckServiceIntegrity()
+        {
+            return onConfigFetched != null && gameConfigs.All(item => item != null);
+        }
+
         public async UniTask FetchAllConfigs()
         {
             try

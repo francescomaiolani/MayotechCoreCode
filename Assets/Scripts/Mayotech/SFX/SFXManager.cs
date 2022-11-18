@@ -15,6 +15,11 @@ namespace Mayotech.SFX
             pooledSFX.Init(3);
         }
 
+        public override bool CheckServiceIntegrity()
+        {
+            return pooledSFX != null;
+        }
+
         public async UniTask SpawnFX(SFX prefab, Vector3 position, Transform parent, float fxDuration,
             Action onFxCompleted = null)
         {

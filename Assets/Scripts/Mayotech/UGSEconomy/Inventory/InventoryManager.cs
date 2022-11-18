@@ -22,6 +22,8 @@ namespace Mayotech.UGSEconomy.Inventory
         public override void InitService() =>
             itemsDictionary = allItems.ToDictionary(item => item.ItemId, item => item);
 
+        public override bool CheckServiceIntegrity() => allItems.All(item => item != null);
+
 #region Utility Methods
 
         protected InventoryItemDefinition GetLocalItemDefinition(string itemId)

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -21,6 +20,8 @@ namespace Mayotech.AppLoading
             get => status;
             set
             {
+                if (status == value)
+                    return;
                 status = value;
                 switch (status)
                 {
@@ -57,7 +58,7 @@ namespace Mayotech.AppLoading
         public void CheckDependencies()
         {
             if (Status != LoadingOperationStatus.NotStarted) return;
-            
+
             if (dependenciesOperation.Count <= 0 || dependenciesOperation.All(item => item.Completed))
                 StartOperation();
         }

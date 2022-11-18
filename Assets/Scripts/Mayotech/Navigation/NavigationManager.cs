@@ -41,6 +41,12 @@ namespace Mayotech.Navigation
                 allScenesDictionary.TryAdd(sceneConfig.SceneName, sceneConfig);
         }
 
+        public override bool CheckServiceIntegrity()
+        {
+            return onSceneLoadedGameEvent != null && onNavigationStarted != null && onNavigationEnded != null &&
+                   allScenes.All(item => item != null) && preloadScenes.All(item => item != null);
+        }
+
         public UniTask PreloadScenes()
         {
             var operations = preloadScenes

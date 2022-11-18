@@ -11,6 +11,7 @@ namespace Mayotech.CloudCode
     public class CloudCodeManager : Service
     {
         public override void InitService() { }
+        public override bool CheckServiceIntegrity() => true;
 
         /// <summary>
         /// Sends a CloudCode Request with PREFILLED parameters, with callbacks on post actions 

@@ -30,9 +30,11 @@ namespace Mayotech.UGSAuthentication
 
         protected UserAuthenticationMethod CurrentAuthenticationMethod { get; set; }
 
-        public override void InitService()
+        public override void InitService() { }
+
+        public override bool CheckServiceIntegrity()
         {
-            //AuthenticationMethod = (AuthenticationMethod)previousAuthenticationMethod.Value;
+            return onPlayerSignedIn != null && previousAuthenticationMethod != null && currentEnvironment != null;
         }
 
         private void OnDestroy() => UnsubscribeAuthenticationCallbacks();

@@ -31,6 +31,11 @@ namespace Mayotech.Resources
             SubscribeLoad();
         }
 
+        public override bool CheckServiceIntegrity()
+        {
+            return onLoadCompleted != null && resources.All(item => item != null);
+        }
+
         public void SubscribeLoad() => onLoadCompleted.Subscribe(OnDataLoaded);
 
         protected void OnDestroy() => onLoadCompleted.Unsubscribe(OnDataLoaded);

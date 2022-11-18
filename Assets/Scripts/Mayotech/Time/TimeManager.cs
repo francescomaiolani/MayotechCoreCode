@@ -23,6 +23,11 @@ namespace Mayotech.SafeTime
             onApplicationPaused.Subscribe(OnApplicationPause);
         }
 
+        public override bool CheckServiceIntegrity()
+        {
+            return clock != null && onApplicationPaused != null;
+        }
+
         private void OnDestroy() => onApplicationPaused.Unsubscribe(OnApplicationPause);
 
         private void OnApplicationPause(bool pause)

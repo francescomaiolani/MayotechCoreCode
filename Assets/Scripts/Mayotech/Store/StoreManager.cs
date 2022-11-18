@@ -25,6 +25,11 @@ namespace Mayotech.Store
 
         public override void InitService() { }
 
+        public override bool CheckServiceIntegrity()
+        {
+            return purchasesData != null;
+        }
+
         public async UniTask InitPurchasables()
         {
             var vitualTask = GetVirtualPurchases();
@@ -92,13 +97,12 @@ namespace Mayotech.Store
                     onFail?.Invoke(new Exception($"Can't afford purchase {purchaseID} locally"));
                     return;
                 }
+
                 var purchaseResult = await EconomyPurchase.MakeVirtualPurchaseAsync(purchaseID,
                     inventoryItemsToPick == null ? null : options);
                 CurrencyManager.OnPuchaseCompleted(purchaseResult);
-                if (purchaseResult.Costs.Inventory.Count > 0 || purchaseResult.Rewards.Inventory.Count > 0)
-                {
-                    
-                }
+                if (purchaseResult.Costs.Inventory.Count > 0 || purchaseResult.Rewards.Inventory.Count > 0) { }
+
                 InventoryManager.OnPurchaseCompleted(purchaseResult);
                 onSuccess?.Invoke();
             }

@@ -9,10 +9,15 @@ namespace Mayotech.Toast
     {
         [SerializeField] private ToastUI toastUI;
         [SerializeField] private int toastMaxQueue;
-        
+
         protected Queue<ToastRequest> toastRequests = new();
 
         public override void InitService() { }
+
+        public override bool CheckServiceIntegrity()
+        {
+            return toastUI != null;
+        }
 
         public void EnqueueToastRequest(ToastRequest request)
         {
@@ -29,14 +34,8 @@ namespace Mayotech.Toast
             {
                 ShowToast(request);
             }
-            
         }
 
-        public void ShowToast(ToastRequest toastRequest)
-        {
-            
-        }
+        public void ShowToast(ToastRequest toastRequest) { }
     }
 }
-
-

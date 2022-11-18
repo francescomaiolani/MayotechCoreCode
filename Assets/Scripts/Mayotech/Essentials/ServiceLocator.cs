@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using Mayotech.CloudCode;
 using Mayotech.Missions;
@@ -15,6 +16,7 @@ using Mayotech.UGSAuthentication;
 using Mayotech.UGSConfig;
 using Mayotech.UGSEconomy.Currency;
 using Mayotech.UGSEconomy.Inventory;
+using Sirenix.Utilities;
 using UnityEngine;
 
 [Serializable]
@@ -70,6 +72,13 @@ public class ServiceLocator : SingletonPersistent<ServiceLocator>
             if (fieldType is IService service)
                 service.InitService();
         }
+    }
+
+    private void CheckManagersIntegrity()
+    {
+        var fields = GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+            .Where(item => item.GetValue(this) is IService).Cast<IService>();
+        fields.ForEach(service => service.CheckServiceIntegrity());
     }
 
     private void OnApplicationPause(bool pauseStatus) => onApplicationPause.RaiseEvent(pauseStatus);
